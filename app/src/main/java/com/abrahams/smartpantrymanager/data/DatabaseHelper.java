@@ -14,19 +14,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String Table_Pantry ="pantry_items";
 
     // items that are saved will have a unique ID.
-    public static final string COL_PANTRY = "id";
+    public static final String COL_PANTRY = "id";
 
     // ingredient names.
-    public static final string COL_PANTRY_NAME = "name";
+    public static final String COL_PANTRY_NAME = "name";
 
     // available amount.
-    public static final string COL_PANTRY_QTY = "quantity";
+    public static final String COL_PANTRY_QTY = "quantity";
 
     // measurement that is used.
-    public static final string COL_PANTRY_UNIT = "unit";
+    public static final String COL_PANTRY_UNIT = "unit";
 
     // optional expiry date.
-    public static final string COL_PANTRY_EXPIRY = "expiry_date";
+    public static final String COL_PANTRY_EXPIRY = "expiry_date";
 
     // sets the name and version of the database.
     public DatabaseHelper(Context context) {

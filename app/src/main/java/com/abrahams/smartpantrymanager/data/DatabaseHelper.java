@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String Table_Pantry ="pantry_items";
 
     // items that are saved will have a unique ID.
-    public static final String COL_PANTRY = "id";
+    public static final String COL_PANTRY_ID = "id";
 
     // ingredient names.
     public static final String COL_PANTRY_NAME = "name";

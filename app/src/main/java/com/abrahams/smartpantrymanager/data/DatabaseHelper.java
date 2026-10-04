@@ -10,6 +10,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "smart_pantry.db";
     private static final int DATABASE_VERSION = 1;
 
+    // this will store pantry items.
+    public static final String Table_Pantry ="pantry_items";
+
+    // items that are saved will have a unique ID.
+    public static final string COL_PANTRY = "id";
+
+    // ingredient names.
+    public static final string COL_PANTRY_NAME = "name";
+
+    // available amount.
+    public static final string COL_PANTRY_QTY = "quantity";
+
+    // measurement that is used.
+    public static final string COL_PANTRY_UNIT = "unit";
+
+    // optional expiry date.
+    public static final string COL_PANTRY_EXPIRY = "expiry_date";
+
     // sets the name and version of the database.
     public DatabaseHelper(Context context) {
         super(context.getApplicationContext(),

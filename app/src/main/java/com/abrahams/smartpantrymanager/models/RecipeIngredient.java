@@ -1,6 +1,6 @@
 package com.abrahams.smartpantrymanager.models;
 
-// only 1 ingredient that is needed by the recipe.
+// only one ingredient that is needed by the recipe.
 public class RecipeIngredient {
 
     private int id;

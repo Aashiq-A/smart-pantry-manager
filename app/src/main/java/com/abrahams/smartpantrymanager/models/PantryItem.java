@@ -10,7 +10,7 @@ public class PantryItem {
     private String unit;
     private String expiryDate;
 
-    // create an item with an ID when it loads from the database.
+    // create an item with an id when it loads from the database.
     public PantryItem(int id, String name, double quantity, String unit, String expiryDate) {
         this.id = id;
         this.name = name;

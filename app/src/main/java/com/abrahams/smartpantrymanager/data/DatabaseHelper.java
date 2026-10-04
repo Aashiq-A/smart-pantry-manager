@@ -28,6 +28,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // optional expiry date.
     public static final String COL_PANTRY_EXPIRY = "expiry_date";
 
+    // store the recipe names with cooking instructions.
+    public static final String TABLE_RECIPES = "recipes";
+
+    // each of the recipes will have a unique id.
+    public static final String RECIPE_ID = "id";
+
+    // name of the recipe.
+    public static final String COL_NAME = "name";
+
+    // the steps to prepare the recipe.
+    public static final String COL_RECIPE_INSTRUCTIONS = "instructions";
+
     // sets the name and version of the database.
     public DatabaseHelper(Context context) {
         super(context.getApplicationContext(),

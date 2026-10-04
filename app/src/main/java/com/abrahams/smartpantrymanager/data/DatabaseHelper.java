@@ -17,12 +17,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void OnCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db) {
 
     }
 
     @Override
-    public void OnUpgrade(SQLiteDatabase db,
+    public void onUpgrade(SQLiteDatabase db,
                           int oldVersion, int newVersion) {
 
         throw  new IllegalStateException(

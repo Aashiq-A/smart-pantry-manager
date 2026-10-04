@@ -37,6 +37,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        db.execSQL("CREAT TABLE " + Table_Pantry + " ("
+                + COL_PANTRY_ID + "INTER PRIMARY KEY AUTOINCREMENT, "
+                + COL_PANTRY_NAME + "TEXT NOT NULL, "
+                + COL_PANTRY_QTY + "REAL NOT NUL;, "
+                + COL_PANTRY_UNIT + "TEXT NOT NULL, "
+                + COL_PANTRY_EXPIRY + "TEXT),");
+
     }
 
     @Override

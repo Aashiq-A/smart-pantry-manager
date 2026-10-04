@@ -32,10 +32,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_RECIPES = "recipes";
 
     // each of the recipes will have a unique id.
-    public static final String RECIPE_ID = "id";
+    public static final String COL_RECIPE_ID = "id";
 
     // name of the recipe.
-    public static final String COL_NAME = "name";
+    public static final String COL_RECIPE_NAME = "name";
 
     // the steps to prepare the recipe.
     public static final String COL_RECIPE_INSTRUCTIONS = "instructions";
@@ -54,6 +54,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COL_PANTRY_QTY + " REAL NOT NULL, "
                 + COL_PANTRY_UNIT + " TEXT NOT NULL, "
                 + COL_PANTRY_EXPIRY + " TEXT)");
+
+        // table created for recipe names with cooking steps.
+        db.execSQL("CREATE TABLE " + TABLE_RECIPES + " ("
+                + COL_RECIPE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COL_RECIPE_NAME + " TEXT NOT NULL, "
+                + COL_RECIPE_INSTRUCTIONS + " TEXT NOT NULL)");
 
     }
 

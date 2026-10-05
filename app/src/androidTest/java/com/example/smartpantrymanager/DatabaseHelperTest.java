@@ -147,7 +147,7 @@ public class DatabaseHelperTest {
         }
     }
 
-    // new test created
+    // new test method created.
     @Test
     public void getAllPantryItemsReturnsSavedItems() {
         Context context = InstrumentationRegistry
@@ -170,10 +170,8 @@ public class DatabaseHelperTest {
                 helper.onConfigure(database);
                 helper.onCreate(database);
 
-                // The pantry should start empty.
                 assertTrue(helper.getAllPantryItems().isEmpty());
 
-                // Saves two items in a different order from their names.
                 long riceId = helper.insertPantryItem(
                         new PantryItem("rice", 200, "g", null));
 
@@ -183,7 +181,7 @@ public class DatabaseHelperTest {
 
                 List<PantryItem> items = helper.getAllPantryItems();
 
-                // Both items should be returned, sorted by name.
+
                 assertEquals(2, items.size());
 
                 PantryItem first = items.get(0);
@@ -199,7 +197,73 @@ public class DatabaseHelperTest {
                 assertEquals(200.0, second.getQuantity(), 0.001);
                 assertEquals("g", second.getUnit());
 
-                // An item can be saved without an expiry date.
+
+                assertTrue(second.getExpiryDate() == null);
+            }
+        }
+    }
+
+    // created new test.
+    @Test
+    public void updatePantryItemChangesOnlySelectedItem() {
+        Context context = InstrumentationRegistry
+                .getInstrumentation().getTargetContext();
+
+        // Uses a temporary database for this test.
+        try (SQLiteDatabase database = SQLiteDatabase.create(null)) {
+
+            try (DatabaseHelper helper = new DatabaseHelper(context) {
+                @Override
+                public SQLiteDatabase getWritableDatabase() {
+                    return database;
+                }
+
+                @Override
+                public SQLiteDatabase getReadableDatabase() {
+                    return database;
+                }
+            }) {
+
+                helper.onConfigure(database);
+                helper.onCreate(database);
+
+                long cheeseId = helper.insertPantryItem(
+                        new PantryItem(
+                                "cheese", 50, "g", "2026-10-10"));
+
+
+                long riceId = helper.insertPantryItem(
+                        new PantryItem("rice", 200, "g", null));
+
+                assertTrue(cheeseId > 0);
+                assertTrue(riceId > 0);
+
+                PantryItem editedItem = new PantryItem(
+                        (int) cheeseId,
+                        "cheddar cheese",
+                        0.1,
+                        "kg",
+                        "2026-10-15");
+
+                int changedRecords = helper.updatePantryItem(editedItem);
+
+                assertEquals(1, changedRecords);
+
+                List<PantryItem> items = helper.getAllPantryItems();
+                assertEquals(2, items.size());
+
+                PantryItem first = items.get(0);
+                assertEquals(cheeseId, (long) first.getId());
+                assertEquals("cheddar cheese", first.getName());
+                assertEquals(0.1, first.getQuantity(), 0.001);
+                assertEquals("kg", first.getUnit());
+                assertEquals("2026-10-15", first.getExpiryDate());
+
+                PantryItem second = items.get(1);
+                assertEquals(riceId, (long) second.getId());
+                assertEquals("rice", second.getName());
+                assertEquals(200.0, second.getQuantity(), 0.001);
+                assertEquals("g", second.getUnit());
                 assertTrue(second.getExpiryDate() == null);
             }
         }

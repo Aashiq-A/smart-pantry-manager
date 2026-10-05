@@ -42,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_RECIPE_INGREDIENTS = "recipe_ingredients";
 
-    public static final String COL_RI_id = "id";
+    public static final String COL_RI_ID = "id";
 
     public static final String COL_RI_RECIPE_ID = "recipe_id";
 

@@ -266,7 +266,8 @@ public class DatabaseHelperTest {
                 assertEquals("g", second.getUnit());
                 assertTrue(second.getExpiryDate() == null);
             }
-
+        }
+    }
             @Test
             public void deletePantryItemRemovesOnlySelectedItem() {
                 Context context = InstrumentationRegistry
@@ -290,7 +291,6 @@ public class DatabaseHelperTest {
                         helper.onConfigure(database);
                         helper.onCreate(database);
 
-
                         long cheeseId = helper.insertPantryItem(
                                 new PantryItem("cheese", 50, "g", null));
 
@@ -300,10 +300,8 @@ public class DatabaseHelperTest {
                         assertTrue(cheeseId > 0);
                         assertTrue(riceId > 0);
 
-
                         int deletedRecords = helper.deletePantryItem((int) cheeseId);
                         assertEquals(1, deletedRecords);
-
 
                         List<PantryItem> items = helper.getAllPantryItems();
                         assertEquals(1, items.size());
@@ -315,7 +313,6 @@ public class DatabaseHelperTest {
                         assertEquals("g", remaining.getUnit());
                         assertTrue(remaining.getExpiryDate() == null);
 
-
                         assertEquals(
                                 0, helper.deletePantryItem((int) cheeseId));
 
@@ -324,8 +321,8 @@ public class DatabaseHelperTest {
                 }
             }
         }
-    }
-}
+
+
 
 
 

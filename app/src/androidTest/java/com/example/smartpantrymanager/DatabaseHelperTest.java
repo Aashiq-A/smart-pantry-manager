@@ -110,5 +110,39 @@ public class DatabaseHelperTest {
                     return database;
                 }
             }) {
+
+                helper.onConfigure(database);
+                helper.onCreate(database);
+
+                PantryItem item = new PantryItem(
+                        "cheese", 50, "g", "2026-10-10");
+
+                long newId = helper.insertPantryItem(item);
+
+                assertTrue(
+                        "Saving should return a valid ID",
+                        newId > 0);
+
+                try (Cursor cursor = database.rawQuery(
+                        "SELECT name, quantity, unit, expiry_date "
+                                + "FROM pantry_items WHERE id = ?",
+                        new String[]{String.valueOf(newId)})) {
+
+                    assertTrue(
+                            "The saved item should exist",
+                            cursor.moveToFirst());
+
+                    assertEquals("cheese", cursor.getString(0));
+                    assertEquals(50.0, cursor.getDouble(1), 0.001);
+                    assertEquals("g", cursor.getString(2));
+                    assertEquals("2026-10-10", cursor.getString(3));
+
+                    assertTrue(
+                            "Only one matching record should exist",
+                            !cursor.moveToNext());
+                }
+            }
+        }
+    }
 }
 

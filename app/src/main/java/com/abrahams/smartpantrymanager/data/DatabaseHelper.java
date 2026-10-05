@@ -14,46 +14,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "smart_pantry.db";
     private static final int DATABASE_VERSION = 1;
 
-    // this will store pantry items.
+    // pantry tables with column names.
     public static final String Table_Pantry ="pantry_items";
-
-    // items that are saved will have a unique ID.
     public static final String COL_PANTRY_ID = "id";
-
-    // ingredient names.
     public static final String COL_PANTRY_NAME = "name";
-
-    // available amount.
     public static final String COL_PANTRY_QTY = "quantity";
-
-    // measurement that is used.
     public static final String COL_PANTRY_UNIT = "unit";
-
-    // optional expiry date.
     public static final String COL_PANTRY_EXPIRY = "expiry_date";
 
-    // store the recipe names with cooking instructions.
+    // recipe table with column names.
     public static final String TABLE_RECIPES = "recipes";
-
-    // each of the recipes will have a unique id.
     public static final String COL_RECIPE_ID = "id";
-
-    // name of the recipe.
     public static final String COL_RECIPE_NAME = "name";
-
-    // the steps to prepare the recipe.
     public static final String COL_RECIPE_INSTRUCTIONS = "instructions";
 
+    // recipe ingredient table with column names.
     public static final String TABLE_RECIPE_INGREDIENTS = "recipe_ingredients";
-
     public static final String COL_RI_ID = "id";
-
     public static final String COL_RI_RECIPE_ID = "recipe_id";
-
     public static final String COL_RI_NAME = "ingredient_name";
-
     public static final String COL_RI_QTY = "quantity";
-
     public static final String COL_RI_UNIT = "unit";
 
     // sets the name and version of the database.
@@ -71,6 +51,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        // create pantry table.
         db.execSQL("CREATE TABLE " + Table_Pantry + " ("
                 + COL_PANTRY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_PANTRY_NAME + " TEXT NOT NULL, "
@@ -78,13 +60,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COL_PANTRY_UNIT + " TEXT NOT NULL, "
                 + COL_PANTRY_EXPIRY + " TEXT)");
 
-        // table created for recipe names with cooking steps.
+        // creates recipe table.
         db.execSQL("CREATE TABLE " + TABLE_RECIPES + " ("
                 + COL_RECIPE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_RECIPE_NAME + " TEXT NOT NULL, "
                 + COL_RECIPE_INSTRUCTIONS + " TEXT NOT NULL)");
 
-        // table created for recipe ingredients.
+        // creates recipe ingredients table.
         db.execSQL("CREATE TABLE " + TABLE_RECIPE_INGREDIENTS + "("
                 + COL_RI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_RI_RECIPE_ID + " INTEGER NOT NULL, "
@@ -96,13 +78,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    // Saves a pantry item.
+    public long insertPantryItem(PantryItem item) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        // values are set and save in each column.
+        ContentValues values = new ContentValues();
+        values.put(COL_PANTRY_NAME, item.getName());
+        values.put(COL_PANTRY_QTY, item.getQuantity());
+        values.put(COL_PANTRY_UNIT, item.getUnit());
+        values.put(COL_PANTRY_EXPIRY, item.getExpiryDate());
+
+        return db.insert(Table_Pantry, null, values);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db,
                           int oldVersion, int newVersion) {
-
-        throw  new IllegalStateException(
+        // Migration steps are needed before changing the version.
+        throw new IllegalStateException(
                 "A database migration is required.");
     }
 }
+
+
 
 

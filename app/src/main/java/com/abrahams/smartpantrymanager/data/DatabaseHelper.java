@@ -80,6 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COL_RECIPE_NAME + " TEXT NOT NULL, "
                 + COL_RECIPE_INSTRUCTIONS + " TEXT NOT NULL)");
 
+        // table created for recipe ingredients.
         db.execSQL("CREATE TABLE " + TABLE_RECIPE_INGREDIENTS + "("
                 + COL_RI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_RI_RECIPE_ID + " INTEGER NOT NULL, "

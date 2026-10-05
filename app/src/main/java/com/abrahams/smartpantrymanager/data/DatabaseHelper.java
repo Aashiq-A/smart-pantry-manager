@@ -67,6 +67,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COL_PANTRY_UNIT + " TEXT NOT NULL, "
                 + COL_PANTRY_EXPIRY + " TEXT)");
 
+        db.execSQL("CREATE TABLE " + TABLE_RECIPE_INGREDIENTS + "("
+                + COL_RI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COL_RI_RECIPE_ID + " INTEGER NOT NULL, "
+                + COL_RI_NAME + " TEXT NOT NULL, "
+                + COL_RI_QTY + " REAL NOT NULL, "
+                + COL_RI_UNIT + " TEXT NOT NULL, "
+                + "FOREIGN KEY (" + COL_RI_RECIPE_ID + ") REFERENCES "
+                + TABLE_RECIPES + "(" + COL_RECIPE_ID + "))");
+
         // table created for recipe names with cooking steps.
         db.execSQL("CREATE TABLE " + TABLE_RECIPES + " ("
                 + COL_RECIPE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "

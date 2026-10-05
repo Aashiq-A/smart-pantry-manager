@@ -14,6 +14,8 @@ import com.abrahams.smartpantrymanager.models.PantryItem;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -144,5 +146,19 @@ public class DatabaseHelperTest {
             }
         }
     }
-}
+
+    // new test created
+    @Test
+    public void getAllPantryItemsReturnsSavedItems() {
+        Context context = InstrumentationRegistry
+                .getInstrumentation().getTargetContext();
+
+        try (SQLiteDatabase database = SQLiteDatabase.create(null)) {
+
+            try (DatabaseHelper helper = new DatabaseHelper(context) {
+                @Override
+                public SQLiteDatabase getWritableDatabase() {
+                    return database;
+                }
+
 

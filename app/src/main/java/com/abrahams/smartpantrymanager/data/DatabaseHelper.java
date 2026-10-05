@@ -59,6 +59,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
+    public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
+
+        db.setForeignKeyConstraintsEnabled(true);
+    }
+
+    @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + Table_Pantry + " ("
                 + COL_PANTRY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -66,6 +73,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COL_PANTRY_QTY + " REAL NOT NULL, "
                 + COL_PANTRY_UNIT + " TEXT NOT NULL, "
                 + COL_PANTRY_EXPIRY + " TEXT)");
+
+        // table created for recipe names with cooking steps.
+        db.execSQL("CREATE TABLE " + TABLE_RECIPES + " ("
+                + COL_RECIPE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COL_RECIPE_NAME + " TEXT NOT NULL, "
+                + COL_RECIPE_INSTRUCTIONS + " TEXT NOT NULL)");
 
         db.execSQL("CREATE TABLE " + TABLE_RECIPE_INGREDIENTS + "("
                 + COL_RI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -75,12 +88,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COL_RI_UNIT + " TEXT NOT NULL, "
                 + "FOREIGN KEY (" + COL_RI_RECIPE_ID + ") REFERENCES "
                 + TABLE_RECIPES + "(" + COL_RECIPE_ID + "))");
-
-        // table created for recipe names with cooking steps.
-        db.execSQL("CREATE TABLE " + TABLE_RECIPES + " ("
-                + COL_RECIPE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COL_RECIPE_NAME + " TEXT NOT NULL, "
-                + COL_RECIPE_INSTRUCTIONS + " TEXT NOT NULL)");
 
     }
 

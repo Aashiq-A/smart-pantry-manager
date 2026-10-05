@@ -4,6 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+// imports added that saves pantry items.
+import android.content.ContentValues;
+import com.abrahams.smartpantrymanager.models.PantryItem;
+
 // manage the apps local database.
 public class DatabaseHelper extends SQLiteOpenHelper {
 

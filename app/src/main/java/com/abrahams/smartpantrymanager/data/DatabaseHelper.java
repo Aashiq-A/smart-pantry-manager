@@ -126,7 +126,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return items;
+
     }
+
+        // new method that reads one pantry using ID.
+        public PantryItem getPantryItemById(int id) {
+            SQLiteDatabase db = getReadableDatabase();
+
+            // Looks for the record with this ID.
+            try (Cursor cursor = db.query(
+                    Table_Pantry,
+                    null,
+                    COL_PANTRY_ID + " = ?",
+                    new String[]{String.valueOf(id)},
+                    null,
+                    null,
+                    null)) {
+
     // new method created that saves to an existing item.
     public int updatePantryItem(PantryItem item) {
         SQLiteDatabase db = getWritableDatabase();

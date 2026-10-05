@@ -8,6 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
 import com.abrahams.smartpantrymanager.models.PantryItem;
 
+// new imports for pantry items.
+import andriod.database.Cursor;
+import java.util.ArrayList;
+import java.util.List;
+
 // manage the apps local database.
 public class DatabaseHelper extends SQLiteOpenHelper {
 

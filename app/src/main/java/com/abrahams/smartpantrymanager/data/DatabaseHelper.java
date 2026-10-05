@@ -40,6 +40,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // the steps to prepare the recipe.
     public static final String COL_RECIPE_INSTRUCTIONS = "instructions";
 
+    public static final String TABLE_RECIPE_INGREDIENTS = "recipe_ingredients";
+
+    public static final String COL_RI_id = "id";
+
+    public static final String COL_RI_RECIPE_ID = "recipe_id";
+
+    public static final String COL_RI_NAME = "ingredient_name";
+
+    public static final String COL_RI_QTY = "quantity";
+
+    public static final String COL_RI_UNIT = "unit";
+
     // sets the name and version of the database.
     public DatabaseHelper(Context context) {
         super(context.getApplicationContext(),

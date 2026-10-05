@@ -266,6 +266,63 @@ public class DatabaseHelperTest {
                 assertEquals("g", second.getUnit());
                 assertTrue(second.getExpiryDate() == null);
             }
+
+            @Test
+            public void deletePantryItemRemovesOnlySelectedItem() {
+                Context context = InstrumentationRegistry
+                        .getInstrumentation().getTargetContext();
+
+
+                try (SQLiteDatabase database = SQLiteDatabase.create(null)) {
+
+                    try (DatabaseHelper helper = new DatabaseHelper(context) {
+                        @Override
+                        public SQLiteDatabase getWritableDatabase() {
+                            return database;
+                        }
+
+                        @Override
+                        public SQLiteDatabase getReadableDatabase() {
+                            return database;
+                        }
+                    }) {
+
+                        helper.onConfigure(database);
+                        helper.onCreate(database);
+
+
+                        long cheeseId = helper.insertPantryItem(
+                                new PantryItem("cheese", 50, "g", null));
+
+                        long riceId = helper.insertPantryItem(
+                                new PantryItem("rice", 200, "g", null));
+
+                        assertTrue(cheeseId > 0);
+                        assertTrue(riceId > 0);
+
+
+                        int deletedRecords = helper.deletePantryItem((int) cheeseId);
+                        assertEquals(1, deletedRecords);
+
+
+                        List<PantryItem> items = helper.getAllPantryItems();
+                        assertEquals(1, items.size());
+
+                        PantryItem remaining = items.get(0);
+                        assertEquals(riceId, (long) remaining.getId());
+                        assertEquals("rice", remaining.getName());
+                        assertEquals(200.0, remaining.getQuantity(), 0.001);
+                        assertEquals("g", remaining.getUnit());
+                        assertTrue(remaining.getExpiryDate() == null);
+
+
+                        assertEquals(
+                                0, helper.deletePantryItem((int) cheeseId));
+
+                        assertEquals(1, helper.getAllPantryItems().size());
+                    }
+                }
+            }
         }
     }
 }

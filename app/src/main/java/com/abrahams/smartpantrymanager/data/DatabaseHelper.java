@@ -144,6 +144,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(item.getId())});
     }
 
+    // Deletes only the pantry item with this ID.
+    public int deletePantryItem(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        return db.delete(
+                Table_Pantry,
+                COL_PANTRY_ID + " = ?",
+                new String[]{String.valueOf(id)});
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db,
                           int oldVersion, int newVersion) {

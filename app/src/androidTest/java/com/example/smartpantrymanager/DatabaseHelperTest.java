@@ -161,4 +161,51 @@ public class DatabaseHelperTest {
                     return database;
                 }
 
+                @Override
+                public SQLiteDatabase getReadableDatabase() {
+                    return database;
+                }
+            }) {
+
+                helper.onConfigure(database);
+                helper.onCreate(database);
+
+                // The pantry should start empty.
+                assertTrue(helper.getAllPantryItems().isEmpty());
+
+                // Saves two items in a different order from their names.
+                long riceId = helper.insertPantryItem(
+                        new PantryItem("rice", 200, "g", null));
+
+                long cheeseId = helper.insertPantryItem(
+                        new PantryItem(
+                                "cheese", 50, "g", "2026-10-10"));
+
+                List<PantryItem> items = helper.getAllPantryItems();
+
+                // Both items should be returned, sorted by name.
+                assertEquals(2, items.size());
+
+                PantryItem first = items.get(0);
+                assertEquals(cheeseId, (long) first.getId());
+                assertEquals("cheese", first.getName());
+                assertEquals(50.0, first.getQuantity(), 0.001);
+                assertEquals("g", first.getUnit());
+                assertEquals("2026-10-10", first.getExpiryDate());
+
+                PantryItem second = items.get(1);
+                assertEquals(riceId, (long) second.getId());
+                assertEquals("rice", second.getName());
+                assertEquals(200.0, second.getQuantity(), 0.001);
+                assertEquals("g", second.getUnit());
+
+                // An item can be saved without an expiry date.
+                assertTrue(second.getExpiryDate() == null);
+            }
+        }
+    }
+}
+
+
+
 

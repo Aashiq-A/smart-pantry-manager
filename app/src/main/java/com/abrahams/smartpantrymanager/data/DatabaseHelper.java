@@ -9,7 +9,7 @@ import android.content.ContentValues;
 import com.abrahams.smartpantrymanager.models.PantryItem;
 
 // new imports for pantry items.
-import andriod.database.Cursor;
+import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +87,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long insertPantryItem(PantryItem item) {
         SQLiteDatabase db = getWritableDatabase();
 
-        // values are set and save in each column.
         ContentValues values = new ContentValues();
         values.put(COL_PANTRY_NAME, item.getName());
         values.put(COL_PANTRY_QTY, item.getQuantity());
@@ -95,6 +94,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COL_PANTRY_EXPIRY, item.getExpiryDate());
 
         return db.insert(Table_Pantry, null, values);
+    }
+
+    public List<PantryItem> getAllPantryItems() {
+        List<PantryItem> items = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        try (Cursor cursor = db.query(
+                Table_Pantry,
+                null,
+                null,
+                null,
+                null,
+                null,
+                COL_PANTRY_NAME + " ASC")) {
+
+            while (cursor.moveToNext()) {
+                items.add(new PantryItem(
+                        cursor.getInt(
+                                cursor.getColumnIndexOrThrow(COL_PANTRY_ID)),
+                        cursor.getString(
+                                cursor.getColumnIndexOrThrow(COL_PANTRY_NAME)),
+                        cursor.getDouble(
+                                cursor.getColumnIndexOrThrow(COL_PANTRY_QTY)),
+                        cursor.getString(
+                                cursor.getColumnIndexOrThrow(COL_PANTRY_UNIT)),
+                        cursor.getString(
+                                cursor.getColumnIndexOrThrow(COL_PANTRY_EXPIRY))
+                ));
+            }
+        }
+
+        return items;
     }
 
     @Override

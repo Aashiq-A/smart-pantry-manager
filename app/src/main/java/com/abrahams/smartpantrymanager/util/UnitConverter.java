@@ -9,12 +9,12 @@ public final class UnitConverter {
 
     public static String baseUnit(String unit) {
         switch (clean(unit)) {
+            case "g":
             case "kg":
-            case "1":
                 return "g";
 
             case "ml":
-            case "1":
+            case "l":
             case "tsp":
                 return "ml";
 
@@ -28,16 +28,16 @@ public final class UnitConverter {
 
     public static double toBaseQuantity(double quantity, String unit) {
         switch (clean(unit)) {
-            case ""
-            case ""
+            case "kg":
+            case "l":
                 return quantity * 1000;
 
             case "tsp":
                 return quantity * 5;
 
-            case ""
-            case ""
-            case
+            case "g":
+            case "ml":
+            case "pcs":
                 return quantity;
 
             default:
@@ -48,5 +48,6 @@ public final class UnitConverter {
     private static String clean(String unit) {
         return unit == null
                 ? ""
-                :
+                : unit.trim().toLowerCase(Locale.ROOT);
     }
+}

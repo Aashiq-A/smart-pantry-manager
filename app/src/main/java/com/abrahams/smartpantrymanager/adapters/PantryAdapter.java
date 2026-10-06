@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.smartpantrymanager.R;
 import com.abrahams.smartpantrymanager.models.PantryItem;
 
 import java.util.ArrayList;
@@ -29,5 +32,16 @@ public class PantryAdapter {
         this.items = new ArrayList<>(items);
         this.listener = listener;
     }
+    // class create for row holder.
+    static class PantryViewHolder extends RecyclerView.ViewHolder {
+
+        final TextView textName;
+        final TextView textQuantity;
+        final TextView textExpiry;
+        final ImageButton buttonDelete;
+
+        PantryViewHolder(View itemView) {
+            super(itemView);
+        }
 }
 

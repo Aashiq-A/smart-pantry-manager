@@ -99,7 +99,7 @@ public class PantryFragment extends Fragment
                 .setTitle("Delete ingredient")
                 .setMessage("Delete " + item.getName() + "?")
                 .setNegativeButton("Cancel", null)
-                .setPositiveButton("Delete", ((dialog, which) -> {
+                .setPositiveButton("Delete", (dialog, which) -> {
                     try {
                         int deleted = databaseHelper.deletePantryItem(
                                 item.getId());
@@ -115,9 +115,9 @@ public class PantryFragment extends Fragment
                         Toast.makeText(
                                 requireContext(),
                                 "Could not delete ingredient",
-                                Toast.LENGTH_SHORT.show();
+                                Toast.LENGTH_SHORT).show();
                     }
                 })
-                        .show();
+                .show();
     }
 }

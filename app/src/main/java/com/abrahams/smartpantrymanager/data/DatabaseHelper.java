@@ -215,14 +215,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                 cursor.getColumnIndexOrThrow(
                                         COL_RECIPE_INSTRUCTIONS))
                 );
-
-                // Adds this recipe's ingredients.
+                
                 loadIngredientsInto(db, recipe);
                 recipes.add(recipe);
             }
         }
 
         return recipes;
+    }
+
+    // new method created.
+    public Recipe getRecipeById(int id) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        try (Cursor cursor = db.query(
+                TABLE_RECIPES,
+                null,
+                COL_RECIPE_ID + " = ?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null)) {
+
+            if (cursor.moveToFirst()) {
+                Recipe recipe = new Recipe(
+                        cursor.getInt(
+                                cursor.getColumnIndexOrThrow(COL_RECIPE_ID)),
+                        cursor.getString(
+                                cursor.getColumnIndexOrThrow(COL_RECIPE_NAME)),
+                        cursor.getString(
+                                cursor.getColumnIndexOrThrow(
+                                        COL_RECIPE_INSTRUCTIONS))
+                );
+
+                loadIngredientsInto(db, recipe);
+                return recipe;
+            }
+        }
+
+        return null;
     }
 
     // method helper that loads recipe ingredients.

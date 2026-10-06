@@ -32,4 +32,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- expiry date displayed only when one is saved. -->
+    <TextView
+        android:id="@+id/textItemExpiry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp"
+        android:paddingTop="2dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/textItemQuantity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

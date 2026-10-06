@@ -156,9 +156,17 @@ public class AddEditIngredientActivity extends AppCompatActivity {
                 expiry.isEmpty() ? null : expiry);
 
         try (DatabaseHelper helper = new  DatabaseHelper(this)) {
-            long newId = helper.insertPantryItem(item);
+            boolean saved;
 
-            if (newId == -1) {
+            if (itemId == -1) {
+                saved = helper.insertPantryItem(item) != -1;
+            } else {
+
+                item.setId(itemId);
+                saved = helper.updatePantryItem(item) == 1;
+            }
+
+            if (!saved) {
                 Toast.makeText(
                         this,
                         "Could not save ingredient",

@@ -16,6 +16,12 @@ import com.example.smartpantrymanager.R;
 import com.abrahams.smartpantrymanager.data.DatabaseHelper;
 import com.abrahams.smartpantrymanager.adapters.PantryAdapter;
 
+// new import added for ingredients.
+import com.abrahams.smartpantrymanager.models.PantryItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class PantryFragment extends Fragment {
 
     private DatabaseHelper databaseHelper;
@@ -32,5 +38,40 @@ public class PantryFragment extends Fragment {
                 R.layout.fragment_pantry, container, false);
     }
 
+    // created new override that connects the database.
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        databaseHelper = new DatabaseHelper(requireContext());
+
+        textEmptyPantry = view.findViewById(R.id.textEmptyPantry);
+
+        RecyclerView recyclerPantry =
+                view.findViewById(R.id.recyclerPantry);
+
+        recyclerPantry.setLayoutManager(
+                new LinearLayoutManager(requireContext()));
+
+        adapter = new PantryAdapter(new ArrayList<>(), null);
+        recyclerPantry.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (adapter != null) {
+            loadPantryItems();
+        }
+    }
+
+    private void loadPantryItems() {
+        List<PantryItem> items = databaseHelper.getAllPantryItems();
+
+        adapter.updateItems(items);
+
+        textEmptyPantry.setVisibility(
+                items.isEmpty() ? View.VISIBLE : View.GONE);
+    }
 }

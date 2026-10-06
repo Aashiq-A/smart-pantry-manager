@@ -1,16 +1,19 @@
 package com.abrahams.smartpantrymanager.ui;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
-// new import.
-import android.app.DatePickerDialog;
-import android.widget.EditText;
+import android.database.sqlite.SQLiteException;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartpantrymanager.R;
+import com.abrahams.smartpantrymanager.data.DatabaseHelper;
+import com.abrahams.smartpantrymanager.models.PantryItem;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -58,5 +61,18 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
             picker.show();
         });
+        findViewById(R.id.buttonSave).setOnClickListener(
+                view -> saveIngredient());
+    }
+
+    private void saveIngredient() {
+        EditText editName = findViewById(R.id.editIngredientName);
+        EditText editQuantity = findViewById(R.id.editQuantity);
+        EditText editExpiry = findViewById(R.id.editExpiryDate);
+        Spinner spinnerUnit = findViewById(R.id.spinnerUnit);
+
+        String name = editName.getText().toString().trim();
+        String quantityText = editQuantity.getText().toString().trim();
+
     }
 }

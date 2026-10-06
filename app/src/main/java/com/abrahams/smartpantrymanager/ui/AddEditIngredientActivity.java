@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class AddEditIngredientActivity extends AppCompatActivity {
 
-    public STAtic string EXTRA_ITEM_ID = "item_id";
+    public static String EXTRA_ITEM_ID = "item_id";
 
     private int itemId = -1;
 
@@ -29,6 +29,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_edit_ingredient);
+
+        itemId = getIntent().getIntExtra(EXTRA_ITEM_ID, -1);
 
         Spinner spinnerUnit = findViewById(R.id.spinnerUnit);
 

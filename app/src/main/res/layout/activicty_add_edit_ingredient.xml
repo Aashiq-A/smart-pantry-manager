@@ -28,5 +28,24 @@
             android:textColor="@color/text_primary"
             android:inputType="textCapWords"
             android:importantForAutofill="no" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/quantity"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:paddingTop="16dp"
+            android:labelFor="@id/editQuantity" />
+
+        <EditText
+            android:id="@+id/editQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/hint_quantity"
+            android:textColor="@color/text_primary"
+            android:inputType="numberDecimal"
+            android:importantForAutofill="no" />
     </LinearLayout>
 </ScrollView>

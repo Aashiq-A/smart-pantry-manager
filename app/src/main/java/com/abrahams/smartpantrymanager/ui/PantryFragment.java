@@ -1,29 +1,29 @@
 package com.abrahams.smartpantrymanager.ui;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import android.content.Intent;
-
-// new import added.
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smartpantrymanager.R;
 import com.abrahams.smartpantrymanager.data.DatabaseHelper;
 import com.abrahams.smartpantrymanager.adapters.PantryAdapter;
-
-// new import added for ingredients.
 import com.abrahams.smartpantrymanager.models.PantryItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PantryFragment extends Fragment {
+public class PantryFragment extends Fragment
+        implements PantryAdapter.OnItemActionListener {
 
     private DatabaseHelper databaseHelper;
     private PantryAdapter adapter;
@@ -54,10 +54,9 @@ public class PantryFragment extends Fragment {
         recyclerPantry.setLayoutManager(
                 new LinearLayoutManager(requireContext()));
 
-        adapter = new PantryAdapter(new ArrayList<>(), null);
+        adapter = new PantryAdapter(new ArrayList<>(), this);
         recyclerPantry.setAdapter(adapter);
 
-        // Opens the ingredient form when + is tapped.
         view.findViewById(R.id.fabAddItem).setOnClickListener(button -> {
             Intent intent = new Intent(
                     requireContext(), AddEditIngredientActivity.class);
@@ -83,5 +82,42 @@ public class PantryFragment extends Fragment {
 
         textEmptyPantry.setVisibility(
                 items.isEmpty() ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onItemClick(PantryItem item) {
+        Intent intent = new Intent(
+                requireContext(), AddEditIngredientActivity.class);
+        intent.putExtra(
+                AddEditIngredientActivity.EXTRA_ITEM_ID, item.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDeleteClick(PantryItem item) {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Delete ingredient")
+                .setMessage("Delete " + item.getName() + "?")
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Delete", ((dialog, which) -> {
+                    try {
+                        int deleted = databaseHelper.deletePantryItem(
+                                item.getId());
+
+                        Toast.makeText(
+                                requireContext(),
+                                deleted == 1
+                                        ? "Ingredient deleted"
+                                        : "Ingredient no longer exists",
+                                Toast.LENGTH_SHORT).show();
+                        loadPantryItems();
+                    } catch (SQLiteException exception) {
+                        Toast.makeText(
+                                requireContext(),
+                                "Could not delete ingredient",
+                                Toast.LENGTH_SHORT.show();
+                    }
+                })
+                        .show();
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import android.content.Intent;
 
 // new import added.
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -55,6 +56,15 @@ public class PantryFragment extends Fragment {
 
         adapter = new PantryAdapter(new ArrayList<>(), null);
         recyclerPantry.setAdapter(adapter);
+
+        // Opens the ingredient form when + is tapped.
+        view.findViewById(R.id.fabAddItem).setOnClickListener(button -> {
+            Intent intent = new Intent(
+                    requireContext(), AddEditIngredientActivity.class);
+
+            startActivity(intent);
+        });
+
     }
 
     @Override

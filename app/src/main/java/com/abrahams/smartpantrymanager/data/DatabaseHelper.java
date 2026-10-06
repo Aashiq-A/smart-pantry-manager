@@ -284,6 +284,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // new method created that saves name and cooking steps.
+    private void insertSeedRecipe(SQLiteDatabase db, String name,
+                                  String instructions, String[][] ingredients) {
+
+        ContentValues recipeValues = new ContentValues();
+        recipeValues.put(COL_RECIPE_NAME, name);
+        recipeValues.put(COL_RECIPE_INSTRUCTIONS, instructions);
+
+        long recipeId = db.insertOrThrow(
+                TABLE_RECIPES, null, recipeValues);
+
+        
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db,
                           int oldVersion, int newVersion) {

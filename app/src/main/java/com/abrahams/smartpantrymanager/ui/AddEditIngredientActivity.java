@@ -20,6 +20,10 @@ import java.util.Locale;
 
 public class AddEditIngredientActivity extends AppCompatActivity {
 
+    public STAtic string EXTRA_ITEM_ID = "item_id";
+
+    private int itemId = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

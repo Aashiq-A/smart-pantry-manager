@@ -407,6 +407,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         {"butter", "15", "g"},
                         {"milk", "50", "ml"}
                 });
+        insertSeedRecipe(db, "Pap with Tomato and Onion",
+                "1. Cook the maize meal with water according to the packet instructions.\n"
+                        + "2. Chop the onion and tomatoes.\n"
+                        + "3. Heat the oil, soften the onion, then add the tomatoes.\n"
+                        + "4. Cook until the tomatoes soften and serve over the pap.",
+                new String[][]{
+                        {"maize meal", "100", "g"},
+                        {"tomato", "2", "pcs"},
+                        {"onion", "1", "pcs"},
+                        {"oil", "15", "ml"}
+                });
+
+        insertSeedRecipe(db, "Quick Samp and Beans",
+                "1. Use samp and beans that are already fully cooked.\n"
+                        + "2. Chop the onion and cook it in the oil until soft.\n"
+                        + "3. Add the cooked samp and beans with a splash of water.\n"
+                        + "4. Stir and heat until hot throughout.",
+                new String[][]{
+                        {"cooked samp", "200", "g"},
+                        {"cooked beans", "200", "g"},
+                        {"onion", "1", "pcs"},
+                        {"oil", "15", "ml"}
+                });
+
+        insertSeedRecipe(db, "Cabbage and Potato Pan",
+                "1. Cut the potatoes into small pieces and shred the cabbage.\n"
+                        + "2. Chop the onion and soften it in the oil.\n"
+                        + "3. Add the potatoes and a splash of water. Cover and cook gently.\n"
+                        + "4. Add the cabbage and cook, stirring, until everything is tender.",
+                new String[][]{
+                        {"potato", "2", "pcs"},
+                        {"cabbage", "200", "g"},
+                        {"onion", "1", "pcs"},
+                        {"oil", "15", "ml"}
+                });
     }
     @Override
     public void onUpgrade(SQLiteDatabase db,

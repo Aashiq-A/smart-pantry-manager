@@ -295,7 +295,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long recipeId = db.insertOrThrow(
                 TABLE_RECIPES, null, recipeValues);
 
-        
+        for (String[] ingredient : ingredients) {
+            ContentValues ingredientValues = new ContentValues();
+
+            ingredientValues.put(COL_RI_RECIPE_ID, recipeId);
+            ingredientValues.put(COL_RI_NAME, ingredient[0]);
+            ingredientValues.put(
+                    COL_RI_QTY, Double.parseDouble(ingredient[1]));
+            ingredientValues.put(COL_RI_UNIT, ingredient[2]);
+
+            db.insertOrThrow(
+                    TABLE_RECIPE_INGREDIENTS, null, ingredientValues);
+        }
     }
 
     @Override

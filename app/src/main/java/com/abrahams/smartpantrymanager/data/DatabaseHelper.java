@@ -215,7 +215,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                 cursor.getColumnIndexOrThrow(
                                         COL_RECIPE_INSTRUCTIONS))
                 );
-                
+
                 loadIngredientsInto(db, recipe);
                 recipes.add(recipe);
             }

@@ -57,6 +57,9 @@ public class DatabaseHelperTest {
             helper.onConfigure(database);
             helper.onCreate(database);
 
+            database.delete("recipe_ingredients", null, null);
+            database.delete("recipes", null, null);
+
             database.execSQL("INSERT INTO recipes (id, name, instructions) " + "VALUES (?, ?, ?)", new Object[]{1, "Test recipe", "Mix the ingredients"});
 
             database.execSQL("INSERT INTO recipe_ingredients " + "(recipe_id, ingredient_name, quantity, unit) " + "VALUES (?, ?, ?, ?)", new Object[]{1, "cheese", 50, "g"});
@@ -324,6 +327,9 @@ public class DatabaseHelperTest {
 
             helper.onConfigure(database);
             helper.onCreate(database);
+
+            database.delete("recipe_ingredients", null, null);
+            database.delete("recipes", null, null);
 
             database.execSQL(
                     "INSERT INTO recipes (id, name, instructions) VALUES (?, ?, ?)",

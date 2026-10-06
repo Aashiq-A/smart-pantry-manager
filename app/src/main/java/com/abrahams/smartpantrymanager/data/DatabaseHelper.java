@@ -308,7 +308,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     TABLE_RECIPE_INGREDIENTS, null, ingredientValues);
         }
     }
+    // simple recipes.
+    private void seedRecipes(SQLiteDatabase db) {
 
+        insertSeedRecipe(db, "Cheese Toast",
+                "1. Butter the outside of the bread.\n"
+                        + "2. Put the cheese between the slices.\n"
+                        + "3. Cook in a pan until golden and the cheese melts.",
+                new String[][]{
+                        {"bread", "2", "pcs"},
+                        {"cheese", "50", "g"},
+                        {"butter", "10", "g"}
+                });
+
+        insertSeedRecipe(db, "Mushroom and Pepper Omelette",
+                "1. Slice the mushrooms, chop the green pepper and beat the eggs.\n"
+                        + "2. Melt the butter and cook the vegetables until soft.\n"
+                        + "3. Add the eggs and cook until set.",
+                new String[][]{
+                        {"egg", "2", "pcs"},
+                        {"mushroom", "50", "g"},
+                        {"green pepper", "1", "pcs"},
+                        {"butter", "10", "g"}
+                });
+
+        insertSeedRecipe(db, "Potato and Onion Hash",
+                "1. Cut the potatoes and onion into small pieces.\n"
+                        + "2. Heat the oil in a pan and add them.\n"
+                        + "3. Cook, stirring, until the potatoes are soft and golden.",
+                new String[][]{
+                        {"potato", "3", "pcs"},
+                        {"onion", "1", "pcs"},
+                        {"oil", "15", "ml"}
+                });
+    }
     @Override
     public void onUpgrade(SQLiteDatabase db,
                           int oldVersion, int newVersion) {

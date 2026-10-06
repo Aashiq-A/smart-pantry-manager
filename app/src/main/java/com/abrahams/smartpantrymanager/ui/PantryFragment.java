@@ -118,6 +118,6 @@ public class PantryFragment extends Fragment
                                 Toast.LENGTH_SHORT).show();
                     }
                 })
-                 .show();
+                .show();
     }
 }

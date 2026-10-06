@@ -375,7 +375,7 @@ public class DatabaseHelperTest {
             assertEquals("pcs", second.getIngredients().get(0).getUnit());
 
             // test recipe created that reads using ID.
-                    Recipe found = helper.getRecipeById(1);
+            Recipe found = helper.getRecipeById(1);
 
             assertTrue("The recipe should exist", found != null);
             assertEquals(1, found.getId());
@@ -392,8 +392,51 @@ public class DatabaseHelperTest {
             assertNull(helper.getRecipeById(999));
         }
     }
-}
 
+        // new test that checks starter recipes.
+        @Test
+        public void starterRecipesLoadWithIngredients () {
+            Context context = InstrumentationRegistry
+                    .getInstrumentation().getTargetContext();
+
+            try (SQLiteDatabase database = SQLiteDatabase.create(null);
+                 DatabaseHelper helper = new DatabaseHelper(context) {
+                     @Override
+                     public SQLiteDatabase getReadableDatabase() {
+                         return database;
+                     }
+                 }) {
+
+                helper.onConfigure(database);
+                helper.onCreate(database);
+
+                List<Recipe> recipes = helper.getAllRecipes();
+
+                // Checks that all 18 recipes were added.
+                assertEquals(18, recipes.size());
+
+                for (Recipe recipe : recipes) {
+                    assertTrue("Recipe name should not be empty",
+                            !recipe.getName().trim().isEmpty());
+
+                    assertTrue("Cooking steps should not be empty",
+                            !recipe.getInstructions().trim().isEmpty());
+
+                    assertTrue("Each recipe should have ingredients",
+                            !recipe.getIngredients().isEmpty());
+
+                    // Checks the ingredient links and quantities.
+                    for (int i = 0; i < recipe.getIngredients().size(); i++) {
+                        assertEquals(recipe.getId(),
+                                recipe.getIngredients().get(i).getRecipeId());
+
+                        assertTrue("Ingredient quantity should be positive",
+                                recipe.getIngredients().get(i).getQuantity() > 0);
+                    }
+                }
+            }
+        }
+    }
 
 
 

@@ -13,54 +13,75 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:labelFor="@id/editIngredientName"
+            android:paddingTop="8dp"
             android:text="@string/ingredient_name"
             android:textColor="@color/text_secondary"
-            android:textSize="14sp"
-            android:paddingTop="8dp"
-            android:labelFor="@id/editIngredientName" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/editIngredientName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
             android:hint="@string/hint_ingredient_name"
-            android:textColor="@color/text_primary"
+            android:importantForAutofill="no"
             android:inputType="textCapWords"
-            android:importantForAutofill="no" />
+            android:minHeight="48dp"
+            android:textColor="@color/text_primary" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:labelFor="@id/editQuantity"
+            android:paddingTop="16dp"
             android:text="@string/quantity"
             android:textColor="@color/text_secondary"
-            android:textSize="14sp"
-            android:paddingTop="16dp"
-            android:labelFor="@id/editQuantity" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/editQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
             android:hint="@string/hint_quantity"
-            android:textColor="@color/text_primary"
+            android:importantForAutofill="no"
             android:inputType="numberDecimal"
-            android:importantForAutofill="no" />
+            android:minHeight="48dp"
+            android:textColor="@color/text_primary" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:labelFor="@id/spinnerUnit"
+            android:paddingTop="16dp"
             android:text="@string/unit"
             android:textColor="@color/text_secondary"
-            android:textSize="14sp"
-            android:paddingTop="16dp"
-            android:labelFor="@id/spinnerUnit" />
+            android:textSize="14sp" />
 
         <Spinner
             android:id="@+id/spinnerUnit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/editExpiryDate"
+            android:paddingTop="16dp"
+            android:text="@string/expiry_optional"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/editExpiryDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/hint_expiry"
+            android:importantForAutofill="no"
+            android:inputType="none"
+            android:minHeight="48dp"
+            android:textColor="@color/text_primary" />
     </LinearLayout>
 </ScrollView>

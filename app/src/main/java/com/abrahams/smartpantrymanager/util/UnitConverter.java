@@ -26,4 +26,27 @@ public final class UnitConverter {
         }
     }
 
+    public static double toBaseQuantity(double quantity, String unit) {
+        switch (clean(unit)) {
+            case ""
+            case ""
+                return quantity * 1000;
 
+            case "tsp":
+                return quantity * 5;
+
+            case ""
+            case ""
+            case
+                return quantity;
+
+            default:
+                return Double.NaN;
+        }
+    }
+
+    private static String clean(String unit) {
+        return unit == null
+                ? ""
+                :
+    }

@@ -367,6 +367,23 @@ public class DatabaseHelperTest {
             assertEquals(2.0,
                     second.getIngredients().get(0).getQuantity(), 0.001);
             assertEquals("pcs", second.getIngredients().get(0).getUnit());
+
+            // test recipe created that reads using ID.
+                    Recipe found = helper.getRecipeById(1);
+
+            assertTrue("The recipe should exist", found != null);
+            assertEquals(1, found.getId());
+            assertEquals("Toast", found.getName());
+            assertEquals("Toast the bread", found.getInstructions());
+
+            assertEquals(1, found.getIngredients().size());
+            assertEquals(1, found.getIngredients().get(0).getRecipeId());
+            assertEquals("bread", found.getIngredients().get(0).getName());
+            assertEquals(2.0,
+                    found.getIngredients().get(0).getQuantity(), 0.001);
+            assertEquals("pcs", found.getIngredients().get(0).getUnit());
+
+            assertNull(helper.getRecipeById(999));
         }
     }
 }

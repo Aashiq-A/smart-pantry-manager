@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Smart Pantry Manager</string>
+
+    <!-- pantry screen text. -->
+    <string name="my_pantry">My Pantry</string>
+    <string name="empty_pantry">Your pantry is empty. Tap + to add an ingredient.</string>
+    <string name="add_ingredient">Add ingredient</string>
+    <string name="delete_item">Delete ingredient</string>
 </resources>

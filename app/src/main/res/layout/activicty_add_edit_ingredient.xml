@@ -47,5 +47,20 @@
             android:textColor="@color/text_primary"
             android:inputType="numberDecimal"
             android:importantForAutofill="no" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/unit"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:paddingTop="16dp"
+            android:labelFor="@id/spinnerUnit" />
+
+        <Spinner
+            android:id="@+id/spinnerUnit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp" />
     </LinearLayout>
 </ScrollView>

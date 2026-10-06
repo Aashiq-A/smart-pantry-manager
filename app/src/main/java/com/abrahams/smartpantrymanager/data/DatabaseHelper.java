@@ -133,7 +133,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public PantryItem getPantryItemById(int id) {
             SQLiteDatabase db = getReadableDatabase();
 
-            // Looks for the record with this ID.
             try (Cursor cursor = db.query(
                     Table_Pantry,
                     null,
@@ -142,6 +141,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     null,
                     null,
                     null)) {
+                if (cursor.moveToFirst()) {
+                    return new PantryItem(
+                            cursor.getInt(
+                                    cursor.getColumnIndexOrThrow(COL_PANTRY_ID)),
+                            cursor.getString(
+                                    cursor.getColumnIndexOrThrow(COL_PANTRY_NAME)),
+                            cursor.getDouble(
+                                    cursor.getColumnIndexOrThrow(COL_PANTRY_QTY)),
+                            cursor.getString(
+                                    cursor.getColumnIndexOrThrow(COL_PANTRY_UNIT)),
+                            cursor.getString(
+                                    cursor.getColumnIndexOrThrow(COL_PANTRY_EXPIRY))
+                    );
+                }
+            }
+
+            return null;
+        }
 
     // new method created that saves to an existing item.
     public int updatePantryItem(PantryItem item) {

@@ -20,5 +20,17 @@ public class IngredientNormalizerTest {
         assertEquals(
                 "tomato",
                 IngredientNormalizer.normalize("Tomatoes"));
+
+        assertEquals(
+                "potato",
+                IngredientNormalizer.normalize("Potatoes"));
+
+        assertEquals(
+                "green pepper",
+                IngredientNormalizer.normalize("green peppers"));
+
+        assertEquals(
+                "cooked bean",
+                IngredientNormalizer.normalize("cooked beans"));
     }
 }

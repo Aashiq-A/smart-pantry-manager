@@ -341,6 +341,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         {"onion", "1", "pcs"},
                         {"oil", "15", "ml"}
                 });
+
+        insertSeedRecipe(db, "Chakalaka",
+                "1. Chop the onion, green pepper and tomatoes. Grate the carrot.\n"
+                        + "2. Heat the oil and cook the onion, pepper and carrot until soft.\n"
+                        + "3. Add curry powder and tomatoes. Cook until the tomatoes soften.\n"
+                        + "4. Add the baked beans and simmer for 10 minutes.",
+                new String[][]{
+                        {"onion", "1", "pcs"},
+                        {"green pepper", "1", "pcs"},
+                        {"carrot", "1", "pcs"},
+                        {"tomato", "2", "pcs"},
+                        {"baked beans", "400", "g"},
+                        {"curry powder", "1", "tsp"},
+                        {"oil", "15", "ml"}
+                });
+
+        insertSeedRecipe(db, "Fried Cabbage and Carrot",
+                "1. Shred the cabbage, grate the carrot and chop the onion.\n"
+                        + "2. Melt the butter and cook the onion until soft.\n"
+                        + "3. Add the cabbage and carrot. Cover and cook gently.\n"
+                        + "4. Stir regularly until the vegetables are tender.",
+                new String[][]{
+                        {"cabbage", "200", "g"},
+                        {"carrot", "1", "pcs"},
+                        {"onion", "1", "pcs"},
+                        {"butter", "15", "g"}
+                });
+
+        insertSeedRecipe(db, "Tomato and Onion Relish",
+                "1. Chop the tomatoes and onion.\n"
+                        + "2. Heat the oil and cook the onion until soft.\n"
+                        + "3. Add the tomatoes and cook gently, stirring, until thick.",
+                new String[][]{
+                        {"tomato", "3", "pcs"},
+                        {"onion", "1", "pcs"},
+                        {"oil", "15", "ml"}
+                });
     }
     @Override
     public void onUpgrade(SQLiteDatabase db,

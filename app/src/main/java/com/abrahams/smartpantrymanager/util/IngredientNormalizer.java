@@ -6,12 +6,9 @@ import java.util.Map;
 
 public final class IngredientNormalizer {
 
-    private IngredientNormalizer() {
-    }
-
     private static final Map<String, String> PLURALS = new HashMap<>();
 
-    static  {
+    static {
         PLURALS.put("tomatoes", "tomato");
         PLURALS.put("potatoes", "potato");
         PLURALS.put("eggs", "egg");
@@ -30,7 +27,7 @@ public final class IngredientNormalizer {
     private IngredientNormalizer() {
     }
 
-    public static  String normalize(String raw) {
+    public static String normalize(String raw) {
         if (raw == null) {
             return "";
         }
@@ -39,9 +36,14 @@ public final class IngredientNormalizer {
                 .toLowerCase(Locale.ROOT)
                 .replaceAll("\\s+", " ");
 
+        int lastSpace = cleaned.lastIndexOf(' ');
 
-        return raw.trim()
-                .toLowerCase(Locale.ROOT)
-                .replaceAll("\\s+", "");
+        String lastWord = cleaned.substring(lastSpace + 1);
+        String singular = PLURALS.get(lastWord);
+
+        if (singular != null) {
+            return cleaned.substring(0, lastSpace + 1) + singular;
+        }
+        return cleaned;
     }
 }

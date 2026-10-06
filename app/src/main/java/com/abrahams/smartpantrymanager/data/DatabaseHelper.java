@@ -442,6 +442,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         {"onion", "1", "pcs"},
                         {"oil", "15", "ml"}
                 });
+        insertSeedRecipe(db, "Tomato and Egg Breakfast",
+                "1. Chop the tomatoes.\n"
+                        + "2. Melt the butter and cook the tomatoes until soft.\n"
+                        + "3. Beat the eggs, add them to the pan and stir until cooked.",
+                new String[][]{
+                        {"tomato", "2", "pcs"},
+                        {"egg", "2", "pcs"},
+                        {"butter", "10", "g"}
+                });
+
+        insertSeedRecipe(db, "Creamy Mushroom Toast",
+                "1. Slice the mushrooms and cook them in the butter.\n"
+                        + "2. Stir in the flour, then slowly add the milk.\n"
+                        + "3. Stir gently until the sauce thickens.\n"
+                        + "4. Toast two slices of bread and spoon the mushrooms on top.",
+                new String[][]{
+                        {"mushroom", "100", "g"},
+                        {"butter", "15", "g"},
+                        {"flour", "10", "g"},
+                        {"milk", "100", "ml"},
+                        {"bread", "2", "pcs"}
+                });
+
+        insertSeedRecipe(db, "Mild Potato and Bean Curry",
+                "1. Chop the onion and cut the potatoes into small pieces.\n"
+                        + "2. Heat the oil, soften the onion and stir in the curry powder.\n"
+                        + "3. Add chopped tomatoes, potatoes and enough water to simmer.\n"
+                        + "4. Cook until the potatoes are tender, then add baked beans.\n"
+                        + "5. Stir and simmer until hot throughout.",
+                new String[][]{
+                        {"potato", "2", "pcs"},
+                        {"onion", "1", "pcs"},
+                        {"tomato", "2", "pcs"},
+                        {"baked beans", "200", "g"},
+                        {"curry powder", "1", "tsp"},
+                        {"oil", "15", "ml"}
+                });
     }
     @Override
     public void onUpgrade(SQLiteDatabase db,

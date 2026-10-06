@@ -85,6 +85,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "FOREIGN KEY (" + COL_RI_RECIPE_ID + ") REFERENCES "
                 + TABLE_RECIPES + "(" + COL_RECIPE_ID + "))");
 
+        seedRecipes(db);
+
     }
 
     // Saves a pantry item.

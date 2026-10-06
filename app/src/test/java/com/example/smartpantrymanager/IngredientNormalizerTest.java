@@ -33,4 +33,18 @@ public class IngredientNormalizerTest {
                 "cooked bean",
                 IngredientNormalizer.normalize("cooked beans"));
     }
+
+    @Test
+    public void preservesOtherNamesAndHandlesEmptyInput() {
+        assertEquals(
+                "rice",
+                IngredientNormalizer.normalize("rice"));
+
+        assertEquals(
+                "oats",
+                IngredientNormalizer.normalize("oats"));
+
+        assertEquals("", IngredientNormalizer.normalize(null));
+        assertEquals("", IngredientNormalizer.normalize(" "));
+    }
 }

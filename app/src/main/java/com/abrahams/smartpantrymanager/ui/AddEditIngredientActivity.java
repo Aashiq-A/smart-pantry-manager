@@ -93,13 +93,13 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         if (Double.isNaN(quantity)
                 || Double.isInfinite(quantity)
                 || quantity <= 0) {
-            EditQuantity.setError("Enter a quantity greater than zero");
-            editQuantity.requestFocuS()
+            editQuantity.setError("Enter a quantity greater than zero");
+            editQuantity.requestFocus();
             return;
         }
 
-        String unit = spinnerUnit.getSelectedIteM().toString();
-        String expiry = editExpiry.GetText().toString().trim();
+        String unit = spinnerUnit.getSelectedItem().toString();
+        String expiry = editExpiry.getText().toString().trim();
 
         PantryItem item = new PantryItem(
                 name,
@@ -107,8 +107,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
                 unit,
                 expiry.isEmpty() ? null : expiry);
 
-        try (DatabaseHELPER helper = NeW DatabaseHelper(this)) {
-            long newId = helper.insertPantryITem(item);
+        try (DatabaseHelper helper = new  DatabaseHelper(this)) {
+            long newId = helper.insertPantryItem(item);
 
             if (newId == -1) {
                 Toast.makeText(
@@ -122,7 +122,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
                     this,
                     "Could not save ingredient",
                     Toast.LENGTH_SHORT).show();
-            return
+            return;
         }
 
         Toast.makeText(

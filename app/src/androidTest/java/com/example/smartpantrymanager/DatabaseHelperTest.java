@@ -10,6 +10,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.abrahams.smartpantrymanager.data.DatabaseHelper;
 import com.abrahams.smartpantrymanager.models.PantryItem;
+import com.abrahams.smartpantrymanager.models.Recipe;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -303,11 +304,74 @@ public class DatabaseHelperTest {
             assertEquals("g", item.getUnit());
             assertNull(item.getExpiryDate());
 
-            // A missing ID should return no item.
             assertNull(helper.getPantryItemById(999));
         }
     }
+
+    // new test created.
+    @Test
+    public void getAllRecipesLoadsMatchingIngredients() {
+        Context context = InstrumentationRegistry
+                .getInstrumentation().getTargetContext();
+
+        try (SQLiteDatabase database = SQLiteDatabase.create(null);
+             DatabaseHelper helper = new DatabaseHelper(context) {
+                 @Override
+                 public SQLiteDatabase getReadableDatabase() {
+                     return database;
+                 }
+             }) {
+
+            helper.onConfigure(database);
+            helper.onCreate(database);
+
+            database.execSQL(
+                    "INSERT INTO recipes (id, name, instructions) VALUES (?, ?, ?)",
+                    new Object[]{1, "Toast", "Toast the bread"});
+
+            database.execSQL(
+                    "INSERT INTO recipes (id, name, instructions) VALUES (?, ?, ?)",
+                    new Object[]{2, "Rice", "Cook the rice"});
+
+            database.execSQL(
+                    "INSERT INTO recipe_ingredients "
+                            + "(recipe_id, ingredient_name, quantity, unit) "
+                            + "VALUES (?, ?, ?, ?)",
+                    new Object[]{1, "bread", 2, "pcs"});
+
+            database.execSQL(
+                    "INSERT INTO recipe_ingredients "
+                            + "(recipe_id, ingredient_name, quantity, unit) "
+                            + "VALUES (?, ?, ?, ?)",
+                    new Object[]{2, "rice", 200, "g"});
+
+            List<Recipe> recipes = helper.getAllRecipes();
+            assertEquals(2, recipes.size());
+
+            Recipe first = recipes.get(0);
+            assertEquals(2, first.getId());
+            assertEquals("Rice", first.getName());
+            assertEquals("Cook the rice", first.getInstructions());
+            assertEquals(1, first.getIngredients().size());
+            assertEquals(2, first.getIngredients().get(0).getRecipeId());
+            assertEquals("rice", first.getIngredients().get(0).getName());
+            assertEquals(200.0,
+                    first.getIngredients().get(0).getQuantity(), 0.001);
+            assertEquals("g", first.getIngredients().get(0).getUnit());
+
+            Recipe second = recipes.get(1);
+            assertEquals("Toast", second.getName());
+            assertEquals(1, second.getIngredients().size());
+            assertEquals(1, second.getIngredients().get(0).getRecipeId());
+            assertEquals("bread", second.getIngredients().get(0).getName());
+            assertEquals(2.0,
+                    second.getIngredients().get(0).getQuantity(), 0.001);
+            assertEquals("pcs", second.getIngredients().get(0).getUnit());
+        }
+    }
 }
+
+
 
 
 

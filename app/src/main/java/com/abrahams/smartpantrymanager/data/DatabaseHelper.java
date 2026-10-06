@@ -1,15 +1,19 @@
 package com.abrahams.smartpantrymanager.data;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 // imports added that saves pantry items.
-import android.content.ContentValues;
 import com.abrahams.smartpantrymanager.models.PantryItem;
 
+// new imports added.
+import com.abrahams.smartpantrymanager.models.Recipe;
+import com.abrahams.smartpantrymanager.models.RecipeIngredient;
+
 // new imports for pantry items.
-import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -185,6 +189,68 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Table_Pantry,
                 COL_PANTRY_ID + " = ?",
                 new String[]{String.valueOf(id)});
+    }
+
+    // method that reads all recipes that is sorted by name.
+    public List<Recipe> getAllRecipes() {
+        List<Recipe> recipes = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        try (Cursor cursor = db.query(
+                TABLE_RECIPES,
+                null,
+                null,
+                null,
+                null,
+                null,
+                COL_RECIPE_NAME + " ASC")) {
+
+            while (cursor.moveToNext()) {
+                Recipe recipe = new Recipe(
+                        cursor.getInt(
+                                cursor.getColumnIndexOrThrow(COL_RECIPE_ID)),
+                        cursor.getString(
+                                cursor.getColumnIndexOrThrow(COL_RECIPE_NAME)),
+                        cursor.getString(
+                                cursor.getColumnIndexOrThrow(
+                                        COL_RECIPE_INSTRUCTIONS))
+                );
+
+                // Adds this recipe's ingredients.
+                loadIngredientsInto(db, recipe);
+                recipes.add(recipe);
+            }
+        }
+
+        return recipes;
+    }
+
+    // method helper that loads recipe ingredients.
+    private void loadIngredientsInto(SQLiteDatabase db, Recipe recipe) {
+        try (Cursor cursor = db.query(
+                TABLE_RECIPE_INGREDIENTS,
+                null,
+                COL_RI_RECIPE_ID + " = ?",
+                new String[]{String.valueOf(recipe.getId())},
+                null,
+                null,
+                null)) {
+
+            while (cursor.moveToNext()) {
+                recipe.addIngredient(new RecipeIngredient(
+                        cursor.getInt(
+                                cursor.getColumnIndexOrThrow(COL_RI_ID)),
+                        cursor.getInt(
+                                cursor.getColumnIndexOrThrow(COL_RI_RECIPE_ID)),
+                        cursor.getString(
+                                cursor.getColumnIndexOrThrow(COL_RI_NAME)),
+                        cursor.getDouble(
+                                cursor.getColumnIndexOrThrow(COL_RI_QTY)),
+                        cursor.getString(
+                                cursor.getColumnIndexOrThrow(COL_RI_UNIT))
+                ));
+            }
+        }
     }
 
     @Override

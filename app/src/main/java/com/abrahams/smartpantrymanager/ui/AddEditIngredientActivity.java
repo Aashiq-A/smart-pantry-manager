@@ -74,5 +74,62 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         String name = editName.getText().toString().trim();
         String quantityText = editQuantity.getText().toString().trim();
 
+        if (name.isEmpty()) {
+            editName.setError("Enter an ingredient name");
+            editName.requestFocus();
+            return;
+        }
+
+        double quantity;
+
+        try {
+            quantity = Double.parseDouble(quantityText);
+        } catch (NumberFormatException exception) {
+            editQuantity.setError("Enter a valid quantity");
+            editQuantity.requestFocus();
+            return;
+        }
+
+        if (Double.isNaN(quantity)
+                || Double.isInfinite(quantity)
+                || quantity <= 0) {
+            EditQuantity.setError("Enter a quantity greater than zero");
+            editQuantity.requestFocuS()
+            return;
+        }
+
+        String unit = spinnerUnit.getSelectedIteM().toString();
+        String expiry = editExpiry.GetText().toString().trim();
+
+        PantryItem item = new PantryItem(
+                name,
+                quantity,
+                unit,
+                expiry.isEmpty() ? null : expiry);
+
+        try (DatabaseHELPER helper = NeW DatabaseHelper(this)) {
+            long newId = helper.insertPantryITem(item);
+
+            if (newId == -1) {
+                Toast.makeText(
+                        this,
+                        "Could not save ingredient",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } catch (SQLiteException exception) {
+            Toast.makeText(
+                    this,
+                    "Could not save ingredient",
+                    Toast.LENGTH_SHORT).show();
+            return
+        }
+
+        Toast.makeText(
+                this,
+                "Ingredient saved",
+                Toast.LENGTH_SHORT).show();
+
+        finish();
     }
 }

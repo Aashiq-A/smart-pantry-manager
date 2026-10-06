@@ -308,6 +308,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     TABLE_RECIPE_INGREDIENTS, null, ingredientValues);
         }
     }
+
     // simple recipes.
     private void seedRecipes(SQLiteDatabase db) {
 
@@ -479,11 +480,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         {"curry powder", "1", "tsp"},
                         {"oil", "15", "ml"}
                 });
+        insertSeedRecipe(db, "Tomato and Onion Braaibroodjies",
+                "1. Butter the outside of four slices of bread.\n"
+                        + "2. Fill two sandwiches with cheese, sliced tomato and thinly sliced onion.\n"
+                        + "3. Toast gently over low braai coals in a grid, turning often.\n"
+                        + "4. Serve when the bread is golden and the cheese has melted.",
+                new String[][]{
+                        {"bread", "4", "pcs"},
+                        {"cheese", "80", "g"},
+                        {"tomato", "1", "pcs"},
+                        {"onion", "1", "pcs"},
+                        {"butter", "20", "g"}
+                });
+
+        insertSeedRecipe(db, "Buttered Pap",
+                "1. Cook the maize meal with water according to the packet instructions.\n"
+                        + "2. Stir regularly while cooking until the pap is ready.\n"
+                        + "3. Stir in the butter and serve warm.",
+                new String[][]{
+                        {"maize meal", "100", "g"},
+                        {"butter", "10", "g"}
+                });
+
+        insertSeedRecipe(db, "Potato and Egg Breakfast",
+                "1. Cut the potatoes into small cubes and boil until tender, then drain.\n"
+                        + "2. Chop the onion and soften it in the butter.\n"
+                        + "3. Add the potatoes and cook until lightly golden.\n"
+                        + "4. Beat the eggs, pour them into the pan and stir until cooked.",
+                new String[][]{
+                        {"potato", "2", "pcs"},
+                        {"onion", "1", "pcs"},
+                        {"egg", "2", "pcs"},
+                        {"butter", "15", "g"}
+                });
     }
     @Override
     public void onUpgrade(SQLiteDatabase db,
                           int oldVersion, int newVersion) {
-        // Migration steps are needed before changing the version.
+
         throw new IllegalStateException(
                 "A database migration is required.");
     }

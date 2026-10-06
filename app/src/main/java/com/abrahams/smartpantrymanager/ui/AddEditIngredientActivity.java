@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class AddEditIngredientActivity extends AppCompatActivity {
 
-    public static String EXTRA_ITEM_ID = "item_id";
+    public static final String EXTRA_ITEM_ID = "item_id";
 
     private int itemId = -1;
 
@@ -69,6 +69,48 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         });
         findViewById(R.id.buttonSave).setOnClickListener(
                 view -> saveIngredient());
+
+        if (savedInstanceState == null && itemId != -1) {
+            loadIngredient();
+        }
+    }
+
+    private void loadIngredient() {
+        try (DatabaseHelper helper = new DatabaseHelper(this)) {
+            PantryItem item = helper.getPantryItemById(itemId);
+
+            if (item == null) {
+                Toast.makeText(
+                        this, "Ingredient no longer exists",
+                        Toast.LENGTH_SHORT).show();
+                finish();
+                return;
+            }
+
+            EditText editName = findViewById(R.id.editIngredientName);
+            EditText editQuantity = findViewById(R.id.editQuantity);
+            EditText editExpiry = findViewById(R.id.editExpiryDate);
+            Spinner spinnerUnit = findViewById(R.id.spinnerUnit);
+
+            editName.setText(item.getName());
+            editQuantity.setText(Double.toString(item.getQuantity()));
+            editExpiry.setText(
+                    item.getExpiryDate() == null ? "" : item.getExpiryDate());
+
+            for (int position = 0;
+                 position < spinnerUnit.getCount(); position++) {
+                if (item.getUnit().equals(
+                        spinnerUnit.getItemAtPosition(position).toString())) {
+                    spinnerUnit.setSelection(position);
+                    break;
+                }
+            }
+        } catch (SQLiteException exception) {
+            Toast.makeText(
+                    this, "Could not load ingredient",
+                    Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     private void saveIngredient() {

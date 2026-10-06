@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    // colours for pantry screen.
+    <color name="green_primary">#8FA888</color>
+    <color name="green_dark">#6F8768</color>
+    <color name="green_accent">#A8C3A0</color>
+    <color name="soft_coral">#E8A798</color>
+    <color name="cream_background">#FAF6EF</color>
+    <color name="card_surface">#FFFFFF</color>
+    <color name="soft_border">#E6E0D4</color>
+    <color name="text_primary">#3D3B36</color>
+    <color name="text_secondary">#8A8578</color>
 </resources>

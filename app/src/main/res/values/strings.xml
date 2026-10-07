@@ -37,4 +37,21 @@
     <string name="measurement_units_description">Use g and kg for weight, ml and l for volume,
         and pcs for item counts. One teaspoon (tsp) equals 5 ml. Weight and volume are kept separate.</string>
     <string name="pantry_expiry_label">Expires: %1$s</string>
+
+    <!-- Ingredient validation and save messages -->
+    <string name="error_enter_name">Enter an ingredient name</string>
+    <string name="error_valid_quantity">Enter a valid quantity</string>
+    <string name="error_quantity_above_zero">Enter a quantity greater than zero</string>
+    <string name="ingredient_saved">Ingredient saved</string>
+    <string name="could_not_save_ingredient">Could not save ingredient</string>
+    <string name="could_not_load_ingredient">Could not load ingredient</string>
+
+    <!-- Pantry loading and deletion messages -->
+    <string name="delete_ingredient_message">Delete %1$s?</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="ingredient_deleted">Ingredient deleted</string>
+    <string name="ingredient_no_longer_exists">Ingredient no longer exists</string>
+    <string name="could_not_delete_ingredient">Could not delete ingredient</string>
+    <string name="could_not_load_pantry">Could not load your pantry. Please try again.</string>
 </resources>

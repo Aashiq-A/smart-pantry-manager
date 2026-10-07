@@ -189,7 +189,7 @@ public class RecipeMatcherTest {
         assertTrue(RecipeMatcher.findMatchingRecipes(
                 null, pantry).isEmpty());
     }
-    // START: New test for one missing ingredient
+    // a new test for missing ingredient.
     @Test
     public void rejectsRecipeWhenOnlyFourOfFiveIngredientsArePresent() {
         Recipe recipe = new Recipe(

@@ -119,7 +119,76 @@ public class RecipeMatcherTest {
         assertFalse(RecipeMatcher.canMake(recipe, weightPantry));
         assertFalse(RecipeMatcher.canMake(recipe, countPantry));
     }
+    @Test
+    public void rejectsUnknownUnitsAndInvalidPantryQuantities() {
+        Recipe recipe = recipeWith("flour", 100, "g");
 
+        List<PantryItem> unknownUnit = Collections.singletonList(
+                new PantryItem("flour", 100, "unknown", null));
+
+        assertFalse(RecipeMatcher.canMake(recipe, unknownUnit));
+
+        double[] invalidQuantities = {
+                0,
+                -1,
+                Double.NaN,
+                Double.POSITIVE_INFINITY
+        };
+
+        for (double quantity : invalidQuantities) {
+            List<PantryItem> pantry = Collections.singletonList(
+                    new PantryItem("flour", quantity, "g", null));
+
+            assertFalse(RecipeMatcher.canMake(recipe, pantry));
+        }
+
+        Recipe unknownRequirement = recipeWith("flour", 1, "unknown");
+
+        List<PantryItem> validPantry = Collections.singletonList(
+                new PantryItem("flour", 100, "g", null));
+
+        assertFalse(RecipeMatcher.canMake(
+                unknownRequirement, validPantry));
+    }
+
+    @Test
+    public void rejectsEmptyRecipesAndInvalidRequirements() {
+        List<PantryItem> pantry = Collections.singletonList(
+                new PantryItem("flour", 100, "g", null));
+
+        Recipe emptyRecipe = new Recipe(1, "Empty recipe", "Cook");
+
+        assertFalse(RecipeMatcher.canMake(emptyRecipe, pantry));
+        assertFalse(RecipeMatcher.canMake(null, pantry));
+
+        assertFalse(RecipeMatcher.canMake(
+                recipeWith("flour", 100, "g"), null));
+
+        assertFalse(RecipeMatcher.canMake(
+                recipeWith("flour", 0, "g"), pantry));
+
+        assertFalse(RecipeMatcher.canMake(
+                recipeWith("flour", Double.NaN, "g"), pantry));
+    }
+
+    @Test
+    public void returnsOnlyRecipesThatCanBeMade() {
+        Recipe availableRecipe = recipeWith("tomato", 2, "pcs");
+        Recipe unavailableRecipe = recipeWith("onion", 1, "pcs");
+
+        List<PantryItem> pantry = Collections.singletonList(
+                new PantryItem("tomato", 2, "pcs", null));
+
+        List<Recipe> matches = RecipeMatcher.findMatchingRecipes(
+                Arrays.asList(availableRecipe, unavailableRecipe),
+                pantry);
+
+        assertEquals(1, matches.size());
+        assertEquals(availableRecipe, matches.get(0));
+
+        assertTrue(RecipeMatcher.findMatchingRecipes(
+                null, pantry).isEmpty());
+    }
 
     private static Recipe recipeWith(
             String name,

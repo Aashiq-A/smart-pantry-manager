@@ -189,6 +189,45 @@ public class RecipeMatcherTest {
         assertTrue(RecipeMatcher.findMatchingRecipes(
                 null, pantry).isEmpty());
     }
+    // START: New test for one missing ingredient
+    @Test
+    public void rejectsRecipeWhenOnlyFourOfFiveIngredientsArePresent() {
+        Recipe recipe = new Recipe(
+                1, "Five ingredient recipe", "Cook");
+
+        recipe.addIngredient(
+                new RecipeIngredient(1, 1, "onion", 1, "pcs"));
+        recipe.addIngredient(
+                new RecipeIngredient(2, 1, "tomato", 2, "pcs"));
+        recipe.addIngredient(
+                new RecipeIngredient(3, 1, "carrot", 1, "pcs"));
+        recipe.addIngredient(
+                new RecipeIngredient(4, 1, "oil", 15, "ml"));
+        recipe.addIngredient(
+                new RecipeIngredient(5, 1, "curry powder", 1, "tsp"));
+
+        List<PantryItem> fourOfFive = Arrays.asList(
+                new PantryItem("Onions", 2, "pcs", null),
+                new PantryItem("Tomatoes", 4, "pcs", null),
+                new PantryItem("Carrots", 3, "pcs", null),
+                new PantryItem("Oil", 0.5, "l", null));
+
+        assertFalse(RecipeMatcher.canMake(recipe, fourOfFive));
+
+        assertTrue(RecipeMatcher.findMatchingRecipes(
+                Collections.singletonList(recipe),
+                fourOfFive).isEmpty());
+
+        List<PantryItem> allFive = Arrays.asList(
+                new PantryItem("Onions", 2, "pcs", null),
+                new PantryItem("Tomatoes", 4, "pcs", null),
+                new PantryItem("Carrots", 3, "pcs", null),
+                new PantryItem("Oil", 0.5, "l", null),
+                new PantryItem("Curry powder", 2, "tsp", null));
+
+
+        assertTrue(RecipeMatcher.canMake(recipe, allFive));
+    }
 
     private static Recipe recipeWith(
             String name,

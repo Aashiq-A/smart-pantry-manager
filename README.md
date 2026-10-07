@@ -1,6 +1,6 @@
 # Smart Pantry Manager
 
-Smart Pantry Manager it is a Java Android application that helps on cutting down food waste. The user will add the ingredients that they have at home in their pantry and then the application will suggest recipes that they are able to make right now using only the ingredients that is leftover.
+Smart Pantry Manager it is a Java Android application that helps on cutting down food waste. Users can add the ingredients that they have at home that is in their pantry and then the application will suggest recipes that they are able to make right now using only the ingredients that is leftover.
 
 A recipe it will only be suggested if every single ingredient it needs is in the pantry in the amount that is needed or more and this is called strict matching. For example if a recipe needs 5 ingredients and the pantry only has 4 of them then that recipe it will not be shown.
 

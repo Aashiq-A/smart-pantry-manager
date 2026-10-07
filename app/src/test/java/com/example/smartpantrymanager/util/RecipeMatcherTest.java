@@ -51,7 +51,7 @@ public class RecipeMatcherTest {
     }
 
     @Test
-    public void () {
+    public void convertsKilogramsToGrams() {
         Recipe recipe = recipeWith("flour", 500, "g");
 
         List<PantryItem> pantry = Collections.singletonList(
@@ -61,29 +61,29 @@ public class RecipeMatcherTest {
     }
 
     @Test
-    public void () {
-        Recipe milkRecipe = ("milk", 250, "ml");
+    public void convertLitresAndTeaspoonsToMillilitres() {
+        Recipe milkRecipe = recipeWith("milk", 250, "ml");
 
         List<PantryItem> milkPantry = Collections.singletonList(
                 new PantryItem("milk", 0.25, "l", null));
 
-        assertTrue(RecipeMatcher.canMake(milkRecipe, milkPantry))
+        assertTrue(RecipeMatcher.canMake(milkRecipe, milkPantry));
 
-        Recipe oilRecipe = ("oil", 2, "tsp");
+        Recipe oilRecipe = recipeWith("oil", 2, "tsp");
 
         List<PantryItem> oilPantry = Collections.singletonList(
                 new PantryItem("oil", 10, "ml", null));
 
-        assertTrue(RecipeMatcher.canMake(oilRecipe, oilPantry))
+        assertTrue(RecipeMatcher.canMake(oilRecipe, oilPantry));
     }
 
     @Test
-    public void () {
-        Recipe recipe = ("flour", 500, "g");
+    public void combinesDuplicatePantryEntries() {
+        Recipe recipe = recipeWith("flour", 500, "g");
 
         List<PantryItem> pantry = Arrays.asList(
-                new PantryItem("flour", 200, "g", null)
-                new PantryItem(" FLOUR ", 0.3, "kg", null))
+                new PantryItem("flour", 200, "g", null),
+                new PantryItem(" FLOUR ", 0.3, "kg", null));
 
         assertTrue(RecipeMatcher.canMake(recipe, pantry));
     }

@@ -36,4 +36,5 @@
     <string name="measurement_units">Measurement units</string>
     <string name="measurement_units_description">Use g and kg for weight, ml and l for volume,
         and pcs for item counts. One teaspoon (tsp) equals 5 ml. Weight and volume are kept separate.</string>
+    <string name="pantry_expiry_label">Expires: %1$s</string>
 </resources>

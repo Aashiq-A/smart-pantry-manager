@@ -39,7 +39,7 @@ public class RecipesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(
-            @Nullable LayoutInflater inflater,
+            @NonNull LayoutInflater inflater,
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
@@ -65,7 +65,17 @@ public class RecipesFragment extends Fragment {
         recyclerRecipes.setLayoutManager(
                 new LinearLayoutManager(requireContext()));
 
-        adapter = new RecipeAdapter(new ArrayList<>(), null);
+        adapter = new RecipeAdapter(new ArrayList<>(), recipe -> {
+            Intent intent = new Intent(
+                    requireContext(), RecipeDetailActivity.class);
+
+            intent.putExtra(
+                    RecipeDetailActivity.EXTRA_RECIPE_ID,
+                    recipe.getId());
+
+            startActivity(intent);
+        });
+
         recyclerRecipes.setAdapter(adapter);
     }
 

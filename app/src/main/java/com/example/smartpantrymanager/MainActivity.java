@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 
 import com.abrahams.smartpantrymanager.ui.PantryFragment;
+import com.abrahams.smartpantrymanager.ui.RecipesFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,12 +23,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ViewCompat.setOnApplyWindowInsetsListener(
-                findViewById(R.id.main), (v, insets) -> {
+                findViewById(R.id.main), (view, insets) -> {
 
                     Insets systemBars = insets.getInsets(
                             WindowInsetsCompat.Type.systemBars());
 
-                    v.setPadding(
+                    view.setPadding(
                             systemBars.left,
                             systemBars.top,
                             systemBars.right,
@@ -34,11 +37,43 @@ public class MainActivity extends AppCompatActivity {
                     return insets;
                 });
 
-        if (savedInstanceState == null) {
+        BottomNavigationView navigation =
+                findViewById(R.id.bottomNavigation);
+
+        navigation.setOnItemSelectedListener(item -> {
+            Fragment current = getSupportFragmentManager()
+                    .findFragmentById(R.id.fragmentContainer);
+
+            Fragment destination;
+
+            if (item.getItemId() == R.id.navPantry) {
+                if (current instanceof PantryFragment) {
+                    return true;
+                }
+
+                destination = new PantryFragment();
+
+            } else if (item.getItemId() == R.id.navRecipes) {
+                if (current instanceof RecipesFragment) {
+                    return true;
+                }
+
+                destination = new RecipesFragment();
+
+            } else {
+                return false;
+            }
+
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragmentContainer, new PantryFragment())
+                    .replace(R.id.fragmentContainer, destination)
                     .commit();
+
+            return true;
+        });
+
+        if (savedInstanceState == null) {
+            navigation.setSelectedItemId(R.id.navPantry);
         }
     }
 }

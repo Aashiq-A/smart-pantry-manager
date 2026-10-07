@@ -46,7 +46,7 @@ You will need Android Studio and a phone or an emulator that is Android 7.0 (API
 1. Install Android Studio, the latest version that is stable.
 2. Clone the repository:
 ```bash
-   https://github.com/Aashiq-A/smart-pantry-manager.git
+  git clone https://github.com/Aashiq-A/smart-pantry-manager.git
 ```
 3. Open the project folder in Android Studio and wait for Gradle to finish the sync.
 4. Connect an Android phone with USB debugging that is turned on, or start an emulator.
@@ -60,4 +60,8 @@ You will need Android Studio and a phone or an emulator that is Android 7.0 (API
 ## Scope
 
 The app it does not use Google Maps, any mapping SDK or location and GPS services and it has no payments, as the brief requires that the app it stays only on the user's pantry and the matching of recipes.
+
+## References
+
+It is listed in [docs/REFERENCES.md](docs/REFERENCES.md).
 

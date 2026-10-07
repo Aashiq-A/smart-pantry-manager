@@ -39,6 +39,7 @@ public class PantryAdapter
         this.listener = listener;
     }
 
+    // creates one ingredient card from the item_pantry layout.
     @Override
     public PantryViewHolder onCreateViewHolder(
             ViewGroup parent, int viewType) {
@@ -49,6 +50,7 @@ public class PantryAdapter
         return new PantryViewHolder(view);
     }
 
+    // puts the name, quantity and expiry date of the item into the card.
     @Override
     public void onBindViewHolder(
             PantryViewHolder holder, int position) {
@@ -89,13 +91,14 @@ public class PantryAdapter
         return items.size();
     }
 
+    // changes the list with the new items and refreshes the screen.
     public void updateItems(List<PantryItem> newItems) {
         items.clear();
         items.addAll(newItems);
         notifyDataSetChanged();
     }
 
-    // Existing row holder stays below.
+    // row holder stays below.
     static class PantryViewHolder extends RecyclerView.ViewHolder {
 
         final TextView textName;

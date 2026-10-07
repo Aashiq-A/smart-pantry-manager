@@ -15,4 +15,8 @@
     <string name="expiry_optional">Expiry date (optional)</string>
     <string name="hint_expiry">Tap to select a date</string>
     <string name="save">Save</string>
+
+    <string name="suggested_recipes">Suggested Recipes</string>
+    <string name="recipe_matching_description">Recipes you can make with your pantry ingredients.</string>
+    <string name="no_matching_recipes">No recipes match your pantry yet. Add the required ingredients and quantities.</string>
 </resources>

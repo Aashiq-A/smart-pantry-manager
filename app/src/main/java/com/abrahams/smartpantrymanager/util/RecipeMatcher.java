@@ -1,11 +1,12 @@
 package com.abrahams.smartpantrymanager.util;
 
-import com.abrahams.smartpantrymanager.models.pantryItem;
-import com.abrahams.smartpantrymanager.models.recipe;
-import com.abrahams.smartpantrymanager.models.recipeIngredient;
+import com.abrahams.smartpantrymanager.models.PantryItem;
+import com.abrahams.smartpantrymanager.models.Recipe;
+import com.abrahams.smartpantrymanager.models.RecipeIngredient;
 
-import java.util.hashMap;
-import java.util.list;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import java.util.Map;
 
@@ -14,8 +15,27 @@ public final class RecipeMatcher {
     private RecipeMatcher() {
     }
 
+    public static List<Recipe> findMatchingRecipes(
+            List<Recipe> recipes,
+            List<PantryItem> pantryItems) {
+
+        List<Recipe> matches = new ArrayList<>();
+
+        if (recipes == null || pantryItems == null) {
+            return matches;
+        }
+
+        for (Recipe recipe : recipes) {
+            if (canMake(recipe, pantryItems)) {
+                matches.add(recipe);
+            }
+        }
+
+        return matches;
+    }
+
     public static boolean canMake(
-            recipe recipe,
+            Recipe recipe,
             List<PantryItem> pantryItems) {
 
         if (recipe == null
@@ -44,7 +64,7 @@ public final class RecipeMatcher {
             }
         }
 
-        for (recipeIngredient ingredient : recipe.getIngredients()) {
+        for (RecipeIngredient ingredient : recipe.getIngredients()) {
             if (ingredient == null) {
                 return false;
             }
@@ -68,7 +88,7 @@ public final class RecipeMatcher {
 
             if (stock == null
                     || !isPositiveFinite(stock)
-                    || !ispositiveFinite(needed)
+                    || !isPositiveFinite(needed)
                     || stock < needed) {
                 return false;
             }
@@ -89,7 +109,7 @@ public final class RecipeMatcher {
     }
 
     private static void addQuantity(
-            Map<String, Double> Quantities,
+            Map<String, Double> quantities,
             String key,
             double quantity) {
 

@@ -14,7 +14,7 @@ public final class RecipeMatcher {
     private RecipeMatcher() {
     }
 
-    public static Boolean canMake(
+    public static boolean canMake(
             recipe recipe,
             List<PantryItem> pantryItems) {
 
@@ -25,8 +25,8 @@ public final class RecipeMatcher {
             return false;
         }
 
-        Map<String, Double> available = new hashMap<>();
-        Map<String, Double> required = new hashMap<>();
+        Map<String, Double> available = new HashMap<>();
+        Map<String, Double> required = new HashMap<>();
 
 
         for (PantryItem item : pantryItems) {
@@ -40,20 +40,20 @@ public final class RecipeMatcher {
                     item.getQuantity(), item.getUnit());
 
             if (!key.isEmpty() && isPositiveFinite(quantity)) {
-                addQuantity(available, key, quantity)
+                addQuantity(available, key, quantity);
             }
         }
 
         for (recipeIngredient ingredient : recipe.getIngredients()) {
             if (ingredient == null) {
-                return false
+                return false;
             }
 
             String key = ingredientKey(
-                    ingredient.GetName(), ingredient.GetUnit())
+                    ingredient.getName(), ingredient.getUnit());
 
             double quantity = UnitConverter.toBaseQuantity(
-                    ingredient.GetQuantity(), ingredient.GetUnit());
+                    ingredient.getQuantity(), ingredient.getUnit());
 
             if (key.isEmpty() || !isPositiveFinite(quantity)) {
                 return false;
@@ -62,21 +62,22 @@ public final class RecipeMatcher {
             addQuantity(required, key, quantity);
         }
 
-        for (Map.entry<String, Double> entry : required.entrySet()) {
+        for (Map.Entry<String, Double> entry : required.entrySet()) {
             Double stock = available.get(entry.getKey());
             double needed = entry.getValue();
 
-            if (stock == Null
-                    || !IspositiveFinite(stock)
-                    || !sspositiveFinite(needed)
+            if (stock == null
+                    || !isPositiveFinite(stock)
+                    || !ispositiveFinite(needed)
                     || stock < needed) {
-                return false
+                return false;
+            }
         }
 
-        return true
+        return true;
     }
 
-    private static String ingredientKey(string name, string unit) {
+    private static String ingredientKey(String name, String unit) {
         String normalizedName = IngredientNormalizer.normalize(name);
         String baseUnit = UnitConverter.baseUnit(unit);
 

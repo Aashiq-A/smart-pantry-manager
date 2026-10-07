@@ -33,7 +33,7 @@ public class RecipeAdapter
         this.listener = listener;
     }
 
-    // PART 3: Create recipe cards and connect their data.
+    // this creates a recipe ingredient card and connect data.
 
     @NonNull
     @Override
@@ -47,6 +47,7 @@ public class RecipeAdapter
         return new RecipeViewHolder(view);
     }
 
+    // puts the recipe name in the card and opens the details when it is tapped.
     @Override
     public void onBindViewHolder(
             @NonNull RecipeViewHolder holder,
@@ -69,6 +70,7 @@ public class RecipeAdapter
         return recipes.size();
     }
 
+    // changes the list with the recipes that match and refreshes the screen.
     public void updateRecipes(List<Recipe> newRecipes) {
         recipes.clear();
         recipes.addAll(newRecipes);

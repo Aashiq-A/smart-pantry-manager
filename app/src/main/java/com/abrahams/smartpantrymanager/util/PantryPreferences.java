@@ -11,10 +11,11 @@ public final class PantryPreferences {
     private PantryPreferences() {
     }
 
+    // reads if the expiry dates must show.
     public static boolean shouldShowExpiryDates(Context context) {
         return preferences(context).getBoolean(SHOW_EXPIRY, true);
     }
-
+    // saves the choice from the settings switch.
     public static void setShowExpiryDates(
             Context context,
             boolean show) {
@@ -25,6 +26,7 @@ public final class PantryPreferences {
                 .apply();
     }
 
+    // opens the preferences file that is private to the app.
     private static SharedPreferences preferences(Context context) {
         return context.getApplicationContext()
                 .getSharedPreferences(

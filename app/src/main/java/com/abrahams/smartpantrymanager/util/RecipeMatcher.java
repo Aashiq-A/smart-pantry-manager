@@ -15,6 +15,7 @@ public final class RecipeMatcher {
     private RecipeMatcher() {
     }
 
+    // goes through all the recipes and only keeps the ones that can be made with the pantry.
     public static List<Recipe> findMatchingRecipes(
             List<Recipe> recipes,
             List<PantryItem> pantryItems) {
@@ -33,7 +34,7 @@ public final class RecipeMatcher {
 
         return matches;
     }
-
+    // checks if every ingredient of the recipe is in the pantry in the amount that is needed.
     public static boolean canMake(
             Recipe recipe,
             List<PantryItem> pantryItems) {
@@ -48,7 +49,7 @@ public final class RecipeMatcher {
         Map<String, Double> available = new HashMap<>();
         Map<String, Double> required = new HashMap<>();
 
-
+        // adds up everything that is in the pantry.
         for (PantryItem item : pantryItems) {
             if (item == null) {
                 continue;
@@ -63,7 +64,7 @@ public final class RecipeMatcher {
                 addQuantity(available, key, quantity);
             }
         }
-
+        // adds up everything that the recipe needs.
         for (RecipeIngredient ingredient : recipe.getIngredients()) {
             if (ingredient == null) {
                 return false;
@@ -81,7 +82,7 @@ public final class RecipeMatcher {
 
             addQuantity(required, key, quantity);
         }
-
+        // if one ingredient is missing or there is not enough of it the recipe it can not be made.
         for (Map.Entry<String, Double> entry : required.entrySet()) {
             Double stock = available.get(entry.getKey());
             double needed = entry.getValue();
@@ -96,7 +97,7 @@ public final class RecipeMatcher {
 
         return true;
     }
-
+    // makes a key from the cleaned name and the base unit so the same ingredients can be matched.
     private static String ingredientKey(String name, String unit) {
         String normalizedName = IngredientNormalizer.normalize(name);
         String baseUnit = UnitConverter.baseUnit(unit);
@@ -107,7 +108,7 @@ public final class RecipeMatcher {
 
         return normalizedName + "\n" + baseUnit;
     }
-
+    // adds the quantity to the key, if the key is already there the amounts it gets added together.
     private static void addQuantity(
             Map<String, Double> quantities,
             String key,
@@ -119,7 +120,7 @@ public final class RecipeMatcher {
                 key,
                 existing == null ? quantity : existing + quantity);
     }
-
+    // checks that the quantity is a real number that is more than 0.
     private static Boolean isPositiveFinite(double quantity) {
         return !Double.isNaN(quantity)
                 && !Double.isInfinite(quantity)

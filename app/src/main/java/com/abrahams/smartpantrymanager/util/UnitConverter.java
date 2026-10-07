@@ -6,7 +6,7 @@ public final class UnitConverter {
 
     private UnitConverter() {
     }
-
+    // gives the base unit for each unit, weight it is g, volume it is ml and items it is pcs.
     public static String baseUnit(String unit) {
         switch (clean(unit)) {
             case "g":
@@ -25,7 +25,7 @@ public final class UnitConverter {
                 return "";
         }
     }
-
+    // changes the quantity into the base unit, kg and l it is times 1000 and tsp it is times 5.
     public static double toBaseQuantity(double quantity, String unit) {
         switch (clean(unit)) {
             case "kg":

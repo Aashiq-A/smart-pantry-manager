@@ -78,7 +78,7 @@ public class RecipesFragment extends Fragment {
 
         recyclerRecipes.setAdapter(adapter);
     }
-
+    // loads the matching recipes again every time the screen shows.
     @Override
     public void onResume() {
         super.onResume();
@@ -87,7 +87,7 @@ public class RecipesFragment extends Fragment {
             loadMatchingRecipes();
         }
     }
-
+    // reads the recipes and the pantry and only shows the recipes that can be made.
     private void loadMatchingRecipes() {
         try {
             List<Recipe> recipes =

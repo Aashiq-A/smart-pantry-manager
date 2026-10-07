@@ -28,6 +28,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
     private int itemId = -1;
 
+    // sets up the form, unit list, the date picker and the save button.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +99,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         }
     }
 
+    // loads the item from the database and fills in the form when an item is edited.
     private void loadIngredient() {
         try (DatabaseHelper helper = new DatabaseHelper(this)) {
             PantryItem item = helper.getPantryItemById(itemId);
@@ -139,7 +141,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             finish();
         }
     }
-
+    // checks the input and then adds a new item or updates the item that is there.
     private void saveIngredient() {
         EditText editName = findViewById(R.id.editIngredientName);
         EditText editQuantity = findViewById(R.id.editQuantity);

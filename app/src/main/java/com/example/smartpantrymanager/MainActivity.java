@@ -15,7 +15,7 @@ import com.abrahams.smartpantrymanager.ui.RecipesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-
+    // sets up the screen and the bottom navigation that changes between the three fragments.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

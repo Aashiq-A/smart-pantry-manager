@@ -66,6 +66,7 @@ public class PantryFragment extends Fragment
 
     }
 
+    // this method reloads the pantry every time the screen shows again.
     @Override
     public void onResume() {
         super.onResume();
@@ -74,7 +75,7 @@ public class PantryFragment extends Fragment
             loadPantryItems();
         }
     }
-
+    // read all the pantry items from the database.
     private void loadPantryItems() {
         try {
             List<PantryItem> items =
@@ -93,6 +94,7 @@ public class PantryFragment extends Fragment
         }
     }
 
+    // opens the edit screen and passes the id of the item that was tapped.
     @Override
     public void onItemClick(PantryItem item) {
         Intent intent = new Intent(
@@ -102,7 +104,7 @@ public class PantryFragment extends Fragment
         startActivity(intent);
     }
 
-    // START: Updated deletion using string resources
+    // asks the user to confirm before the ingredient it gets deleted.
     @Override
     public void onDeleteClick(PantryItem item) {
         new AlertDialog.Builder(requireContext())

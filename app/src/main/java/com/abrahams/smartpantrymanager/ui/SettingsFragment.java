@@ -26,6 +26,7 @@ public class SettingsFragment extends Fragment {
                 R.layout.fragment_settings, container, false);
     }
 
+    // it will show the saved choice on the switch and saves it again when the switch changes.
     @Override
     public void onViewCreated(
             @NonNull View view,

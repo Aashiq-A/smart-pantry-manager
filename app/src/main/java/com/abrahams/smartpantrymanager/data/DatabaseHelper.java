@@ -58,6 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.setForeignKeyConstraintsEnabled(true);
     }
 
+    // only will run one time, and it creates the tables and adds the recipes.
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -89,7 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    // Saves a pantry item.
+    // saves a pantry item.
     public long insertPantryItem(PantryItem item) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -183,7 +184,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(item.getId())});
     }
 
-    // Deletes only the pantry item with this ID.
+    // deletes only the pantry item with this ID.
     public int deletePantryItem(int id) {
         SQLiteDatabase db = getWritableDatabase();
 

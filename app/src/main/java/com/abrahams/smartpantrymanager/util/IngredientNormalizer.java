@@ -6,6 +6,7 @@ import java.util.Map;
 
 public final class IngredientNormalizer {
 
+    // plural names that are common and the singular name that it changes to.
     private static final Map<String, String> PLURALS = new HashMap<>();
 
     static {

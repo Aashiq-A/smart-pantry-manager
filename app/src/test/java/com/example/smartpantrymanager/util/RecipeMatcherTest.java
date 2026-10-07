@@ -18,8 +18,8 @@ import static org.junit.Assert.assertTrue;
 public class RecipeMatcherTest {
 
     @Test
-    public void () {
-        Recipe recipe = ("tomato", 2, "pcs");
+    public void acceptsExactQuantitiesAndNormalizedNames() {
+        Recipe recipe = recipeWith("tomato", 2, "pcs");
 
         List<PantryItem> pantry = Collections.singletonList(
                 new PantryItem("  TOMATOES  ", 2, "pcs", null));
@@ -28,38 +28,38 @@ public class RecipeMatcherTest {
     }
 
     @Test
-    public void () {
-        Recipe recipe = ("tomato", 2, "pcs");
+    public void rejectsMissingIngredient() {
+        Recipe recipe = recipeWith("tomato", 2, "pcs");
 
         recipe.addIngredient(
                 new RecipeIngredient(2, 1, "onion", 1, "pcs"));
 
         List<PantryItem> pantry = Collections.singletonList(
-                new PantryItem("tomato", 2, "pcs", null))
+                new PantryItem("tomato", 2, "pcs", null));
 
-        assertFalse(RecipeMatcher.canMake(recipe, pantry))
+        assertFalse(RecipeMatcher.canMake(recipe, pantry));
     }
 
     @Test
-    public void () {
-        Recipe recipe = ("tomato", 3, "pcs");
+    public void rejectsInsufficientQuantity() {
+        Recipe recipe = recipeWith("tomato", 3, "pcs");
 
         List<PantryItem> pantry = Collections.singletonList(
-                new PantryItem("tomato", 2, "pcs", null))
+                new PantryItem("tomato", 2, "pcs", null));
 
-        assertFalse(RecipeMatcher.canMake(recipe, pantry))
+        assertFalse(RecipeMatcher.canMake(recipe, pantry));
     }
 
-    private static Recipe (
+    private static Recipe recipeWith(
             String name,
             double quantity,
             String unit) {
 
-        Recipe recipe = new Recipe(1, "Test recipe", "Cook")
+        Recipe recipe = new Recipe(1, "Test recipe", "Cook");
 
         recipe.addIngredient(
-                new RecipeIngredient(1, 1, name, quantity, unit))
+                new RecipeIngredient(1, 1, name, quantity, unit));
 
-        return recipe
+        return recipe;
     }
 }

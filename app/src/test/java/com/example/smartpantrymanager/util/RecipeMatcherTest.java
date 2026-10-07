@@ -88,6 +88,39 @@ public class RecipeMatcherTest {
         assertTrue(RecipeMatcher.canMake(recipe, pantry));
     }
 
+    @Test
+    public void combinesRepeatedRecipeRequirements() {
+        Recipe recipe = recipeWith("tomato", 2, "pcs");
+
+        recipe.addIngredient(
+                new RecipeIngredient(2, 1, "tomatoes", 2, "pcs"));
+
+        List<PantryItem> insufficient = Collections.singletonList(
+                new PantryItem("tomato", 3, "pcs", null));
+
+        assertFalse(RecipeMatcher.canMake(recipe, insufficient));
+
+        List<PantryItem> enough = Collections.singletonList(
+                new PantryItem("tomato", 4, "pcs", null));
+
+        assertTrue(RecipeMatcher.canMake(recipe, enough));
+    }
+
+    @Test
+    public void keepsWeightVolumeAndCountSeparate() {
+        Recipe recipe = recipeWith("milk", 100, "ml");
+
+        List<PantryItem> weightPantry = Collections.singletonList(
+                new PantryItem("milk", 100, "g", null));
+
+        List<PantryItem> countPantry = Collections.singletonList(
+                new PantryItem("milk", 100, "pcs", null));
+
+        assertFalse(RecipeMatcher.canMake(recipe, weightPantry));
+        assertFalse(RecipeMatcher.canMake(recipe, countPantry));
+    }
+
+
     private static Recipe recipeWith(
             String name,
             double quantity,

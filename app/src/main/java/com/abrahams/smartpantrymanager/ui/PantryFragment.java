@@ -70,18 +70,27 @@ public class PantryFragment extends Fragment
     public void onResume() {
         super.onResume();
 
-        if (adapter != null) {
+        if (adapter != null && databaseHelper != null) {
             loadPantryItems();
         }
     }
 
     private void loadPantryItems() {
-        List<PantryItem> items = databaseHelper.getAllPantryItems();
+        try {
+            List<PantryItem> items =
+                    databaseHelper.getAllPantryItems();
 
-        adapter.updateItems(items);
+            adapter.updateItems(items);
 
-        textEmptyPantry.setVisibility(
-                items.isEmpty() ? View.VISIBLE : View.GONE);
+            textEmptyPantry.setVisibility(
+                    items.isEmpty() ? View.VISIBLE : View.GONE);
+
+        } catch (SQLiteException exception) {
+            Toast.makeText(
+                    requireContext(),
+                    R.string.could_not_load_pantry,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -93,13 +102,21 @@ public class PantryFragment extends Fragment
         startActivity(intent);
     }
 
+    // START: Updated deletion using string resources
     @Override
     public void onDeleteClick(PantryItem item) {
         new AlertDialog.Builder(requireContext())
-                .setTitle("Delete ingredient")
-                .setMessage("Delete " + item.getName() + "?")
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("Delete", (dialog, which) -> {
+                .setTitle(R.string.delete_item)
+                .setMessage(getString(
+                        R.string.delete_ingredient_message,
+                        item.getName()))
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.delete, (dialog, which) -> {
+
+                    if (databaseHelper == null) {
+                        return;
+                    }
+
                     try {
                         int deleted = databaseHelper.deletePantryItem(
                                 item.getId());
@@ -107,17 +124,34 @@ public class PantryFragment extends Fragment
                         Toast.makeText(
                                 requireContext(),
                                 deleted == 1
-                                        ? "Ingredient deleted"
-                                        : "Ingredient no longer exists",
+                                        ? R.string.ingredient_deleted
+                                        : R.string.ingredient_no_longer_exists,
                                 Toast.LENGTH_SHORT).show();
+
                         loadPantryItems();
+
                     } catch (SQLiteException exception) {
                         Toast.makeText(
                                 requireContext(),
-                                "Could not delete ingredient",
+                                R.string.could_not_delete_ingredient,
                                 Toast.LENGTH_SHORT).show();
                     }
                 })
                 .show();
     }
+
+    // new database view cleanup.
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (databaseHelper != null) {
+            databaseHelper.close();
+            databaseHelper = null;
+        }
+
+        adapter = null;
+        textEmptyPantry = null;
+    }
 }
+

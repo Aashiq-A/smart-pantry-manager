@@ -1,6 +1,15 @@
 package com.abrahams.smartpantrymanager.ui;
 
+import android.content.Intent;
 import android.widget.TextView;
+import android.database.sqlite.SQLiteException;
+import android.widget.Toast;
+
+import com.abrahams.smartpantrymanager.models.PantryItem;
+import com.abrahams.smartpantrymanager.models.Recipe;
+import com.abrahams.smartpantrymanager.util.RecipeMatcher;
+
+import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,6 +67,40 @@ public class RecipesFragment extends Fragment {
 
         adapter = new RecipeAdapter(new ArrayList<>(), null);
         recyclerRecipes.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (adapter != null && databaseHelper != null) {
+            loadMatchingRecipes();
+        }
+    }
+
+    private void loadMatchingRecipes() {
+        try {
+            List<Recipe> recipes =
+                    databaseHelper.getAllRecipes();
+
+            List<PantryItem> pantryItems =
+                    databaseHelper.getAllPantryItems();
+
+            List<Recipe> matches =
+                    RecipeMatcher.findMatchingRecipes(
+                            recipes, pantryItems);
+
+            adapter.updateRecipes(matches);
+
+            textEmptyRecipes.setVisibility(
+                    matches.isEmpty() ? View.VISIBLE : View.GONE);
+
+        } catch (SQLiteException exception) {
+            Toast.makeText(
+                    requireContext(),
+                    R.string.could_not_load_recipes,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

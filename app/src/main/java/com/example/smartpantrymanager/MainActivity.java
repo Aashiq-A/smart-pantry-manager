@@ -2,6 +2,7 @@ package com.example.smartpantrymanager;
 
 import android.os.Bundle;
 
+import com.abrahams.smartpantrymanager.ui.SettingsFragment;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -59,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 destination = new RecipesFragment();
+
+            } else if (item.getItemId() == R.id.navSettings) {
+                if (current instanceof SettingsFragment) {
+                    return true;
+                }
+
+                destination = new SettingsFragment();
 
             } else {
                 return false;

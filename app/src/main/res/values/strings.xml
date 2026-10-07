@@ -19,4 +19,5 @@
     <string name="suggested_recipes">Suggested Recipes</string>
     <string name="recipe_matching_description">Recipes you can make with your pantry ingredients.</string>
     <string name="no_matching_recipes">No recipes match your pantry yet. Add the required ingredients and quantities.</string>
+    <string name="view_recipe_details">Tap to view ingredients and cooking steps</string>
 </resources>

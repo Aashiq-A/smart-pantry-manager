@@ -1,20 +1,24 @@
 package com.abrahams.smartpantrymanager.ui;
 
 import android.app.DatePickerDialog;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-
-import android.database.sqlite.SQLiteException;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
-import com.example.smartpantrymanager.R;
 import com.abrahams.smartpantrymanager.data.DatabaseHelper;
 import com.abrahams.smartpantrymanager.models.PantryItem;
+import com.example.smartpantrymanager.R;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -28,7 +32,26 @@ public class AddEditIngredientActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_edit_ingredient);
+
+        ViewCompat.setOnApplyWindowInsetsListener(
+                findViewById(R.id.addEditRoot), (view, insets) -> {
+
+                    Insets systemBars = insets.getInsets(
+                            WindowInsetsCompat.Type.systemBars());
+
+                    Insets keyboard = insets.getInsets(
+                            WindowInsetsCompat.Type.ime());
+
+                    view.setPadding(
+                            systemBars.left,
+                            systemBars.top,
+                            systemBars.right,
+                            Math.max(systemBars.bottom, keyboard.bottom));
+
+                    return insets;
+                });
 
         itemId = getIntent().getIntExtra(EXTRA_ITEM_ID, -1);
 
@@ -81,7 +104,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
             if (item == null) {
                 Toast.makeText(
-                        this, "Ingredient no longer exists",
+                        this, R.string.ingredient_no_longer_exists,
                         Toast.LENGTH_SHORT).show();
                 finish();
                 return;
@@ -93,7 +116,11 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             Spinner spinnerUnit = findViewById(R.id.spinnerUnit);
 
             editName.setText(item.getName());
-            editQuantity.setText(Double.toString(item.getQuantity()));
+            String quantity = BigDecimal.valueOf(item.getQuantity())
+                    .stripTrailingZeros()
+                    .toPlainString();
+
+            editQuantity.setText(quantity);
             editExpiry.setText(
                     item.getExpiryDate() == null ? "" : item.getExpiryDate());
 
@@ -107,7 +134,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             }
         } catch (SQLiteException exception) {
             Toast.makeText(
-                    this, "Could not load ingredient",
+                    this, R.string.could_not_load_ingredient,
                     Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -123,7 +150,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         String quantityText = editQuantity.getText().toString().trim();
 
         if (name.isEmpty()) {
-            editName.setError("Enter an ingredient name");
+            editName.setError(getString(R.string.error_enter_name));
             editName.requestFocus();
             return;
         }
@@ -133,7 +160,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         try {
             quantity = Double.parseDouble(quantityText);
         } catch (NumberFormatException exception) {
-            editQuantity.setError("Enter a valid quantity");
+            editQuantity.setError(
+                    getString(R.string.error_valid_quantity));
             editQuantity.requestFocus();
             return;
         }
@@ -141,7 +169,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         if (Double.isNaN(quantity)
                 || Double.isInfinite(quantity)
                 || quantity <= 0) {
-            editQuantity.setError("Enter a quantity greater than zero");
+            editQuantity.setError(
+                    getString(R.string.error_quantity_above_zero));
             editQuantity.requestFocus();
             return;
         }
@@ -155,7 +184,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
                 unit,
                 expiry.isEmpty() ? null : expiry);
 
-        try (DatabaseHelper helper = new  DatabaseHelper(this)) {
+        try (DatabaseHelper helper = new DatabaseHelper(this)) {
             boolean saved;
 
             if (itemId == -1) {
@@ -169,21 +198,21 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             if (!saved) {
                 Toast.makeText(
                         this,
-                        "Could not save ingredient",
+                        R.string.could_not_save_ingredient,
                         Toast.LENGTH_SHORT).show();
                 return;
             }
         } catch (SQLiteException exception) {
             Toast.makeText(
                     this,
-                    "Could not save ingredient",
+                    R.string.could_not_save_ingredient,
                     Toast.LENGTH_SHORT).show();
             return;
         }
 
         Toast.makeText(
                 this,
-                "Ingredient saved",
+                R.string.ingredient_saved,
                 Toast.LENGTH_SHORT).show();
 
         finish();

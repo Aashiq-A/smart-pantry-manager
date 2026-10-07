@@ -2,6 +2,7 @@ package com.abrahams.smartpantrymanager.adapters;
 
 
 import com.abrahams.smartpantrymanager.util.PantryPreferences;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,9 @@ public class PantryAdapter
             holder.textExpiry.setVisibility(View.GONE);
         } else {
             holder.textExpiry.setVisibility(View.VISIBLE);
-            holder.textExpiry.setText("Expires: " + expiry);
+            holder.textExpiry.setText(
+                    holder.itemView.getContext().getString(
+                            R.string.pantry_expiry_label, expiry));
         }
 
         holder.itemView.setOnClickListener(
